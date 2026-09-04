@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gold.indiabusinessinternational.online/sitemap.xml

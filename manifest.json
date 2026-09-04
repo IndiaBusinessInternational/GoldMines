@@ -1,0 +1,28 @@
+{
+  "name": "IBI Gold Mines — Gold Price Tracker & Buy Signals",
+  "short_name": "Gold Mines",
+  "description": "Live gold prices for your city in India (24K, 22K, per gram, per sovereign), trend forecasts and a rule-based buy-the-dip signal. By India Business International.",
+  "id": "./",
+  "start_url": "./?src=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#161311",
+  "theme_color": "#161311",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": ["finance", "shopping", "utilities"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "og-banner.png", "sizes": "1200x630", "type": "image/png", "form_factor": "wide", "label": "IBI Gold Mines — live gold price, forecast and buy signal" }
+  ],
+  "shortcuts": [
+    { "name": "Buy signal", "short_name": "Signal", "url": "./#signal" },
+    { "name": "Price chart", "short_name": "Chart", "url": "./#chart" },
+    { "name": "Jewellery calculator", "short_name": "Calculator", "url": "./#calculator" }
+  ]
+}

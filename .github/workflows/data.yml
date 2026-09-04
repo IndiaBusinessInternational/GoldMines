@@ -1,0 +1,38 @@
+name: Refresh gold data
+
+# IBJA publishes the AM rate ~12:00 IST and the PM rate ~17:00 IST.
+# 07:30 UTC = 13:00 IST, 12:30 UTC = 18:00 IST. Weekdays only (bullion markets).
+on:
+  schedule:
+    - cron: '30 7 * * 1-5'
+    - cron: '30 12 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build data/history.json
+        run: python scripts/build_data.py
+      - name: Commit if changed
+        run: |
+          git config user.name  "IBI Gold Mines bot"
+          git config user.email "indiabusinessinternational@gmail.com"
+          if git diff --quiet -- data/history.json; then
+            echo "no change"
+          else
+            git add data/history.json
+            git commit -m "data: refresh $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi

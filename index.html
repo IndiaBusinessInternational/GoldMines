@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en-IN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>IBI Gold Mines — Gold Price Tracker & Buy Signals</title>
+<link rel="canonical" href="https://gold.indiabusinessinternational.online/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="India Business International">
+<meta name="theme-color" content="#161311">
+<meta name="color-scheme" content="dark light">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="Live gold price for your city in India — 24K and 22K per gram, per 10 g and per sovereign — with trend forecasts and a rule-based buy-the-dip signal that tells you when gold is cheap. By India Business International.">
+<!-- Open Graph / social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="India Business International">
+<meta property="og:title" content="IBI Gold Mines — Gold Price Tracker & Buy Signals">
+<meta property="og:description" content="Live 24K / 22K gold rates for your Indian city, 10-year charts, forecast bands and a buy-the-dip signal that tells you when gold is cheap.">
+<meta property="og:url" content="https://gold.indiabusinessinternational.online/">
+<meta property="og:image" content="https://gold.indiabusinessinternational.online/og-banner.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="IBI Gold Mines — Gold Price Tracker & Buy Signals — India Business International">
+<meta property="og:locale" content="en_IN">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IBI Gold Mines — Gold Price Tracker & Buy Signals">
+<meta name="twitter:description" content="Live 24K / 22K gold rates for your Indian city, forecast bands and a buy-the-dip signal.">
+<meta name="twitter:image" content="https://gold.indiabusinessinternational.online/og-banner.png">
+<meta name="ibi-build" content="v1.0.0-2026-09-04">
+
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gold Mines">
+<meta name="application-name" content="IBI Gold Mines">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "IBI Gold Mines",
+  "url": "https://gold.indiabusinessinternational.online/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "description": "Live gold prices for Indian cities with trend forecasts and a rule-based buy-the-dip signal.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "publisher": { "@type": "Organization", "name": "India Business International", "url": "https://www.indiabusinessinternational.online/" }
+}
+</script>
+
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Tokens. Dark is the default (gold reads best on a dark vault surface);
+   light is a real second palette, not an inversion. Chart series colours
+   were validated with the dataviz palette validator in BOTH modes.
+   ───────────────────────────────────────────────────────────────────────── */
+:root{
+  --bg:#161311; --bg-2:#1e1a16; --card:#221d18; --card-2:#2a241e; --line:#3a322a; --line-2:#4a4036;
+  --ink:#f6efe2; --ink-2:#cdbfa8; --ink-3:#9a8c75;
+  --gold:#e3b23c; --gold-2:#f5cf6b; --gold-3:#b8860b; --gold-ink:#f0c14b;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --critical:#d03b3b; --good-ink:#5bd35b; --critical-ink:#ff7a7a;
+  --s-price:#b8860b; --s-price-hi:#f0c14b; --s-sma50:#3987e5; --s-sma200:#199e70; --s-band:rgba(240,193,75,.10); --s-cone:rgba(240,193,75,.16); --s-grid:#2c261f; --s-axis:#9a8c75;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --radius:16px; --radius-sm:10px;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#f8f5ee; --bg-2:#fffdf7; --card:#ffffff; --card-2:#f4efe3; --line:#e6dfd0; --line-2:#d3c9b4;
+  --ink:#1f1a12; --ink-2:#4e4536; --ink-3:#7d7259;
+  --gold:#b8860b; --gold-2:#d4a017; --gold-3:#8a5f0b; --gold-ink:#8a5f0b;
+  --good-ink:#0a7a0a; --critical-ink:#b32424;
+  --s-price:#d4a017; --s-price-hi:#8a5f0b; --s-sma50:#2a78d6; --s-sma200:#1baf7a; --s-band:rgba(212,160,23,.12); --s-cone:rgba(212,160,23,.18); --s-grid:#ede6d6; --s-axis:#7d7259;
+  --shadow:0 10px 30px rgba(60,40,0,.10);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Segoe UI",Roboto,system-ui,sans-serif;font-size:15px;line-height:1.5;font-variant-numeric:tabular-nums;min-height:100dvh}
+h1,h2,h3,h4{font-family:Montserrat,Inter,"Segoe UI",sans-serif;margin:0;line-height:1.2}
+a{color:var(--gold-ink)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── Top bar ── */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.version-badge{font-family:Montserrat,sans-serif;font-weight:700;font-size:11px;padding:3px 8px;border-radius:999px;background:var(--gold);color:#1f1a12;letter-spacing:.3px;flex:none}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);min-width:0}
+.brand svg{width:34px;height:34px;flex:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
+.brand-title{font-size:18px;font-weight:800;letter-spacing:-.2px;white-space:nowrap}
+.brand-title .accent{color:var(--gold-ink)}
+.brand-sub{font-size:11px;color:var(--ink-3);display:none}
+@media(min-width:720px){.brand-sub{display:block}}
+.topbar-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.chip-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);background:var(--card);border-radius:999px;padding:7px 12px;cursor:pointer;font-size:13px;font-weight:500;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip-btn:hover{border-color:var(--gold)}
+.icon-btn{width:38px;height:38px;border-radius:999px;border:1px solid var(--line-2);background:var(--card);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+.icon-btn:hover{border-color:var(--gold)}
+.icon-btn svg{width:18px;height:18px}
+#install-btn{display:none}
+@media(max-width:600px){
+  .topbar-in{padding:8px 10px;gap:8px}
+  .brand-title{font-size:15px}
+  .brand svg{width:28px;height:28px}
+  .chip-btn{max-width:118px;padding:6px 9px;font-size:12px}
+  .icon-btn{width:34px;height:34px}
+  .topbar-actions{gap:5px}
+}
+@media(max-width:400px){.brand-title span.accent{display:inline}.brand-title{font-size:14px}}
+
+/* ── Layout ── */
+main{max-width:1180px;margin:0 auto;padding:18px 16px 40px}
+section{margin:0 0 26px;scroll-margin-top:72px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+.sec-head h2{font-size:20px;font-weight:700}
+.sec-head .sub{color:var(--ink-3);font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.muted{color:var(--ink-3)}
+.small{font-size:12px}
+.up{color:var(--good-ink)} .down{color:var(--critical-ink)}
+.grid{display:grid;gap:14px}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+
+/* ── Hero / price ── */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;align-items:stretch}
+@media(max-width:860px){.hero{grid-template-columns:1fr}}
+.price-card{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--card) 0%,var(--card-2) 100%)}
+.price-card::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(240,193,75,.16),transparent 65%);pointer-events:none}
+.live-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--ink-3)}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 0 rgba(12,163,12,.6);animation:pulse 2s infinite}
+.live-dot.off{background:var(--ink-3);animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(12,163,12,.5)}70%{box-shadow:0 0 0 8px rgba(12,163,12,0)}100%{box-shadow:0 0 0 0 rgba(12,163,12,0)}}
+.price-label{font-size:13px;color:var(--ink-2);margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.price-big{font-family:Montserrat,sans-serif;font-weight:800;font-size:clamp(38px,6vw,58px);letter-spacing:-1px;color:var(--gold-ink);line-height:1.05;margin:4px 0 2px}
+.price-big small{font-size:.38em;font-weight:600;color:var(--ink-2);letter-spacing:0;margin-left:6px}
+.price-change{font-weight:600;font-size:14px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.price-change .pill{padding:2px 8px;border-radius:999px;background:var(--card-2);font-size:12px;font-weight:500;color:var(--ink-2)}
+.rates{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:16px}
+.rate{background:color-mix(in srgb,var(--card-2) 70%,transparent);border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px}
+.rate .k{font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.6px}
+.rate .v{font-family:Montserrat,sans-serif;font-weight:700;font-size:19px;margin-top:2px}
+.rate .d{font-size:11px;color:var(--ink-3)}
+.rate.hi{border-color:color-mix(in srgb,var(--gold) 50%,var(--line));background:linear-gradient(135deg,rgba(240,193,75,.14),transparent)}
+.hero-art{display:flex;align-items:center;justify-content:center;position:relative;min-height:240px;background:radial-gradient(ellipse at 50% 70%,rgba(240,193,75,.18),transparent 60%),var(--card)}
+.hero-art img,.hero-art svg{max-width:100%;max-height:340px;width:auto;height:auto;filter:drop-shadow(0 18px 24px rgba(0,0,0,.45))}
+.hero-art .cap{position:absolute;left:14px;bottom:10px;font-size:11px;color:var(--ink-3)}
+
+/* ── Signal ── */
+.signal{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start}
+@media(max-width:860px){.signal{grid-template-columns:1fr}}
+.gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.gauge{width:100%;max-width:280px;height:auto}
+.verdict{font-family:Montserrat,sans-serif;font-weight:800;font-size:22px;text-align:center;letter-spacing:-.2px}
+.verdict-sub{text-align:center;color:var(--ink-2);font-size:13px;max-width:280px}
+.reasons{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.reasons li{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--card-2)}
+.reasons .ic{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#1f1a12}
+.reasons .ic.g{background:var(--good)} .reasons .ic.w{background:var(--warn)} .reasons .ic.b{background:var(--critical);color:#fff}
+.reasons .t{font-size:13px} .reasons .t b{font-weight:600}
+.reasons .pts{font-family:Montserrat,sans-serif;font-weight:700;font-size:13px;color:var(--ink-2)}
+.advice{margin-top:12px;padding:12px 14px;border-radius:var(--radius-sm);background:linear-gradient(135deg,rgba(240,193,75,.16),rgba(240,193,75,.04));border:1px solid color-mix(in srgb,var(--gold) 40%,var(--line))}
+.advice b{color:var(--gold-ink)}
+.zones{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+.zones th,.zones td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+.zones th{font-weight:600;color:var(--ink-3);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.zones td.num{text-align:right;font-weight:600}
+.zones .below{color:var(--good-ink)} .zones .above{color:var(--ink-3)}
+
+/* ── Chart ── */
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:var(--card)}
+.seg button{border:0;background:transparent;padding:6px 12px;cursor:pointer;font-size:13px;font-weight:500;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--gold);color:#1f1a12;font-weight:600}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink-2);margin:6px 0 4px}
+.legend button{border:0;background:transparent;display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:2px 4px;color:inherit}
+.legend button[aria-pressed="false"]{opacity:.4;text-decoration:line-through}
+.legend .key{width:18px;height:0;border-top:2px solid;display:inline-block}
+.legend .key.band{width:18px;height:10px;border:0;background:var(--s-band);outline:1px solid var(--s-price)}
+.chart-box{position:relative;width:100%}
+.chart-box svg{width:100%;height:auto;display:block;overflow:visible}
+.chart-box .axis text{fill:var(--s-axis);font-size:11px;font-family:Inter,sans-serif}
+.chart-box .grid line{stroke:var(--s-grid);stroke-width:1}
+.tip{position:absolute;pointer-events:none;background:color-mix(in srgb,var(--card) 94%,transparent);border:1px solid var(--line-2);border-radius:10px;padding:8px 10px;font-size:12px;box-shadow:var(--shadow);display:none;min-width:170px;z-index:5}
+.tip .d{color:var(--ink-3);margin-bottom:4px}
+.tip .r{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.tip .r .k{display:inline-flex;align-items:center;gap:6px;color:var(--ink-2)}
+.tip .r .k i{width:14px;border-top:2px solid;display:inline-block}
+.tip .r b{font-weight:600}
+.table-view{overflow-x:auto;margin-top:10px}
+.table-view table{border-collapse:collapse;font-size:12px;width:100%;min-width:560px}
+.table-view th,.table-view td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right}
+.table-view th:first-child,.table-view td:first-child{text-align:left}
+.table-view th{color:var(--ink-3);font-weight:600}
+
+/* ── Forecast tiles ── */
+.tile{padding:14px}
+.tile .k{font-size:12px;color:var(--ink-3)}
+.tile .v{font-family:Montserrat,sans-serif;font-weight:800;font-size:22px;margin-top:4px}
+.tile .r{font-size:12px;color:var(--ink-2);margin-top:2px}
+.tile .bar{height:6px;border-radius:3px;background:var(--line);margin-top:10px;position:relative;overflow:hidden}
+.tile .bar i{position:absolute;top:0;bottom:0;background:linear-gradient(90deg,var(--s-price),var(--s-price-hi));border-radius:3px}
+.trend-badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:var(--card-2);color:var(--ink-2)}
+
+/* ── Galleries ── */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;transition:transform .15s,border-color .15s}
+.item:hover{transform:translateY(-2px);border-color:var(--gold)}
+.item .art{width:110px;height:110px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 8px 10px rgba(0,0,0,.35))}
+.item .art svg{width:100%;height:100%}
+.item .n{font-weight:600;font-size:14px}
+.item .w{font-size:12px;color:var(--ink-3)}
+.item .p{font-family:Montserrat,sans-serif;font-weight:800;font-size:17px;color:var(--gold-ink)}
+.item .sub{font-size:11px;color:var(--ink-3)}
+
+/* ── Forms ── */
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-3)}
+label.f input,label.f select{font:inherit;color:var(--ink);background:var(--card-2);border:1px solid var(--line-2);border-radius:10px;padding:9px 10px;font-size:14px;width:100%}
+label.f input:focus,label.f select:focus{border-color:var(--gold);outline:none}
+.total{display:flex;flex-direction:column;gap:2px;margin-top:14px}
+.total .big{font-family:Montserrat,sans-serif;font-weight:800;font-size:30px;color:var(--gold-ink)}
+.breakdown{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.breakdown td{padding:5px 0;border-bottom:1px dashed var(--line)}
+.breakdown td:last-child{text-align:right;font-weight:600}
+.btn{border:1px solid var(--line-2);background:var(--card-2);border-radius:10px;padding:9px 14px;cursor:pointer;font-weight:600;font-size:13px}
+.btn.primary{background:var(--gold);color:#1f1a12;border-color:var(--gold)}
+.btn:hover{border-color:var(--gold)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.alerts-list{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.alerts-list li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card-2);font-size:13px}
+.alerts-list .x{border:0;background:transparent;cursor:pointer;color:var(--ink-3);font-size:16px}
+.notice{padding:12px 14px;border-radius:10px;background:var(--card-2);border:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+.notice.hit{border-color:var(--good);background:rgba(12,163,12,.12)}
+
+/* ── Modal (pinned head/foot, scrolling body) ── */
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55)}
+.modal.open{display:flex}
+.modal-card{width:min(560px,100%);max-height:calc(100dvh - 32px);display:flex;flex-direction:column;min-height:0;background:var(--card);border:1px solid var(--line-2);border-radius:var(--radius);box-shadow:var(--shadow)}
+.modal-head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex:none}
+.modal-head h3{font-size:16px}
+.modal-body{padding:16px 18px;overflow:auto;min-height:0;flex:1 1 auto}
+.modal-foot{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;flex:none}
+@media(max-width:430px){.modal-foot .btn.primary{flex:1 1 100%}}
+.modal-body .form{margin-bottom:14px}
+.city-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px;margin-top:8px}
+.city-list button{border:1px solid var(--line);background:var(--card-2);border-radius:8px;padding:7px 8px;cursor:pointer;font-size:13px;text-align:left}
+.city-list button[aria-pressed="true"]{border-color:var(--gold);background:rgba(240,193,75,.16);font-weight:600}
+
+footer{border-top:1px solid var(--line);padding:22px 16px 34px;text-align:center;color:var(--ink-3);font-size:12px}
+footer .disc{max-width:820px;margin:0 auto 10px;color:var(--ink-3)}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--card);border:1px solid var(--line-2);border-radius:999px;padding:10px 16px;font-size:13px;box-shadow:var(--shadow);z-index:200;display:none;align-items:center;gap:10px;max-width:calc(100% - 32px)}
+.toast.show{display:flex}
+.toast button{border:0;background:var(--gold);color:#1f1a12;border-radius:999px;padding:5px 10px;font-weight:600;cursor:pointer}
+.ibja{width:100%;border-collapse:collapse;font-size:12px}
+.ibja th,.ibja td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right}
+.ibja th:first-child,.ibja td:first-child{text-align:left}
+.ibja th{color:var(--ink-3);font-weight:600}
+.method{font-size:13px;color:var(--ink-2)} .method li{margin:4px 0}
+.skeleton{color:transparent;background:linear-gradient(90deg,var(--card-2),var(--line),var(--card-2));background-size:200% 100%;animation:sk 1.2s infinite;border-radius:6px}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+</style>
+</head>
+<body>
+
+<!-- Shared SVG defs: gold gradients used by every coin / ornament illustration -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="gFace" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#fff2b3"/><stop offset=".35" stop-color="#f3c744"/><stop offset=".7" stop-color="#c8931a"/><stop offset="1" stop-color="#8a5f0b"/></radialGradient>
+    <linearGradient id="gRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe89a"/><stop offset=".5" stop-color="#b07d12"/><stop offset="1" stop-color="#6e4a06"/></linearGradient>
+    <linearGradient id="gRing" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#ffe89a"/><stop offset=".5" stop-color="#a8760f"/><stop offset="1" stop-color="#ffe9a0"/></linearGradient>
+    <linearGradient id="gBar" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a0"/><stop offset=".45" stop-color="#e0ac2b"/><stop offset="1" stop-color="#8a5f0b"/></linearGradient>
+    <linearGradient id="gMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1b8"/><stop offset=".3" stop-color="#f1c34a"/><stop offset=".55" stop-color="#b98410"/><stop offset=".8" stop-color="#f3cc5e"/><stop offset="1" stop-color="#7d5407"/></linearGradient>
+    <linearGradient id="gMetalV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1b8"/><stop offset=".4" stop-color="#e9b834"/><stop offset="1" stop-color="#8a5f0b"/></linearGradient>
+    <radialGradient id="gRuby" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ff9aa8"/><stop offset=".4" stop-color="#d81e3c"/><stop offset="1" stop-color="#5e0714"/></radialGradient>
+    <radialGradient id="gEmerald" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#b9ffd6"/><stop offset=".4" stop-color="#159a5a"/><stop offset="1" stop-color="#053d22"/></radialGradient>
+    <radialGradient id="gPearl" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#efe6d9"/><stop offset="1" stop-color="#b8a893"/></radialGradient>
+    <filter id="gEmboss" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="1" stdDeviation=".5" flood-color="#fff4c2" flood-opacity=".9"/><feDropShadow dx="0" dy="-1" stdDeviation=".5" flood-color="#5a3c05" flood-opacity=".8"/></filter>
+    <symbol id="coinSym" viewBox="0 0 512 512">
+      <circle cx="256" cy="256" r="248" fill="url(#gRim)"/>
+      <circle cx="256" cy="256" r="244" fill="none" stroke="#5f4004" stroke-width="7" stroke-dasharray="4 5.2" opacity=".55"/>
+      <circle cx="256" cy="256" r="228" fill="url(#gFace)"/>
+      <circle cx="256" cy="256" r="228" fill="none" stroke="url(#gRing)" stroke-width="6"/>
+      <circle cx="256" cy="256" r="196" fill="none" stroke="#7a5308" stroke-width="2.5" opacity=".6"/>
+      <circle cx="256" cy="256" r="192" fill="none" stroke="#ffe9a0" stroke-width="1.5" opacity=".7"/>
+      <g fill="#7a5308" filter="url(#gEmboss)" font-family="Montserrat,'Segoe UI',Arial,sans-serif" font-weight="800" text-anchor="middle">
+        <text x="256" y="288" font-size="118" letter-spacing="-2">IBI</text>
+        <text x="256" y="336" font-size="30" letter-spacing="6" font-weight="700">24K · 999.9</text>
+        <text x="256" y="150" font-size="26" letter-spacing="4" font-weight="700">GOLD MINES</text>
+      </g>
+    </symbol>
+    <symbol id="barSym" viewBox="0 0 200 120">
+      <path d="M30 30 L170 30 L190 95 L10 95 Z" fill="url(#gBar)"/>
+      <path d="M30 30 L170 30 L162 44 L38 44 Z" fill="#fff1b8" opacity=".55"/>
+      <path d="M10 95 L190 95 L184 104 L16 104 Z" fill="#6e4a06" opacity=".8"/>
+      <g fill="#7a5308" filter="url(#gEmboss)" font-family="Montserrat,Arial,sans-serif" font-weight="800" text-anchor="middle"><text x="100" y="66" font-size="16">IBI · 999.9</text><text x="100" y="84" font-size="11" letter-spacing="2">FINE GOLD</text></g>
+    </symbol>
+    <symbol id="chainSym" viewBox="0 0 200 200">
+      <path d="M22 30 C 40 130, 160 130, 178 30" fill="none" stroke="#7d5407" stroke-width="11" stroke-linecap="round"/>
+      <path d="M22 30 C 40 130, 160 130, 178 30" fill="none" stroke="url(#gMetal)" stroke-width="8" stroke-linecap="round" stroke-dasharray="7 4"/>
+      <path d="M22 30 C 40 130, 160 130, 178 30" fill="none" stroke="#fff1b8" stroke-width="2" stroke-dasharray="7 4" opacity=".5"/>
+      <path d="M100 104 l-10 12 l10 24 l10 -24 z" fill="url(#gMetal)" stroke="#7d5407" stroke-width="1"/>
+      <circle cx="100" cy="124" r="4" fill="url(#gRuby)"/>
+    </symbol>
+    <symbol id="bangleSym" viewBox="0 0 200 200">
+      <ellipse cx="88" cy="100" rx="70" ry="70" fill="none" stroke="#7d5407" stroke-width="20"/>
+      <ellipse cx="88" cy="100" rx="70" ry="70" fill="none" stroke="url(#gMetal)" stroke-width="16"/>
+      <ellipse cx="88" cy="100" rx="70" ry="70" fill="none" stroke="#fff1b8" stroke-width="2" opacity=".5" stroke-dasharray="3 6"/>
+      <ellipse cx="122" cy="106" rx="66" ry="66" fill="none" stroke="#7d5407" stroke-width="18" opacity=".95"/>
+      <ellipse cx="122" cy="106" rx="66" ry="66" fill="none" stroke="url(#gMetalV)" stroke-width="14"/>
+      <path d="M60 100 a62 62 0 0 1 28 -60" fill="none" stroke="#fff6cf" stroke-width="3" opacity=".6"/>
+    </symbol>
+    <symbol id="ringSym" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="118" rx="58" ry="62" fill="none" stroke="#7d5407" stroke-width="22"/>
+      <ellipse cx="100" cy="118" rx="58" ry="62" fill="none" stroke="url(#gMetal)" stroke-width="18"/>
+      <path d="M52 110 a58 62 0 0 1 20 -48" fill="none" stroke="#fff6cf" stroke-width="3" opacity=".6"/>
+      <path d="M78 58 L122 58 L134 74 L100 100 L66 74 Z" fill="url(#gBar)" stroke="#7d5407" stroke-width="1.5"/>
+      <path d="M84 50 L116 50 L128 66 L100 88 L72 66 Z" fill="url(#gRuby)" stroke="#7a0f22" stroke-width="1"/>
+      <path d="M92 56 L108 56 L100 62 Z" fill="#fff" opacity=".55"/>
+    </symbol>
+    <symbol id="earringSym" viewBox="0 0 200 200">
+      <g transform="translate(58 20)">
+        <circle cx="0" cy="8" r="7" fill="none" stroke="url(#gMetal)" stroke-width="3"/>
+        <path d="M-6 20 l12 0 l0 14 l-12 0z" fill="url(#gMetal)"/>
+        <path d="M-30 96 C -30 40, 30 40, 30 96 Z" fill="url(#gMetalV)" stroke="#7d5407" stroke-width="1.5"/>
+        <path d="M-30 96 L30 96" stroke="#7d5407" stroke-width="2"/>
+        <g fill="url(#gPearl)"><circle cx="-22" cy="106" r="5"/><circle cx="-8" cy="110" r="5"/><circle cx="8" cy="110" r="5"/><circle cx="22" cy="106" r="5"/></g>
+        <circle cx="0" cy="70" r="6" fill="url(#gEmerald)"/>
+      </g>
+      <g transform="translate(142 20)">
+        <circle cx="0" cy="8" r="7" fill="none" stroke="url(#gMetal)" stroke-width="3"/>
+        <path d="M-6 20 l12 0 l0 14 l-12 0z" fill="url(#gMetal)"/>
+        <path d="M-30 96 C -30 40, 30 40, 30 96 Z" fill="url(#gMetalV)" stroke="#7d5407" stroke-width="1.5"/>
+        <path d="M-30 96 L30 96" stroke="#7d5407" stroke-width="2"/>
+        <g fill="url(#gPearl)"><circle cx="-22" cy="106" r="5"/><circle cx="-8" cy="110" r="5"/><circle cx="8" cy="110" r="5"/><circle cx="22" cy="106" r="5"/></g>
+        <circle cx="0" cy="70" r="6" fill="url(#gEmerald)"/>
+      </g>
+    </symbol>
+    <symbol id="necklaceSym" viewBox="0 0 200 200">
+      <path d="M18 26 C 30 120, 170 120, 182 26" fill="none" stroke="#7d5407" stroke-width="13" stroke-linecap="round"/>
+      <path d="M18 26 C 30 120, 170 120, 182 26" fill="none" stroke="url(#gMetal)" stroke-width="10" stroke-linecap="round" stroke-dasharray="5 3"/>
+      <g fill="url(#gMetalV)" stroke="#7d5407" stroke-width="1">
+        <path d="M56 84 l-7 10 l7 16 l7 -16z"/><path d="M78 96 l-7 10 l7 18 l7 -18z"/><path d="M100 100 l-9 12 l9 24 l9 -24z"/><path d="M122 96 l-7 10 l7 18 l7 -18z"/><path d="M144 84 l-7 10 l7 16 l7 -16z"/>
+      </g>
+      <g><circle cx="56" cy="96" r="3.5" fill="url(#gRuby)"/><circle cx="78" cy="109" r="3.5" fill="url(#gEmerald)"/><circle cx="100" cy="116" r="4.5" fill="url(#gRuby)"/><circle cx="122" cy="109" r="3.5" fill="url(#gEmerald)"/><circle cx="144" cy="96" r="3.5" fill="url(#gRuby)"/></g>
+    </symbol>
+    <symbol id="mangalSym" viewBox="0 0 200 200">
+      <path d="M20 22 C 30 110, 170 110, 180 22" fill="none" stroke="#1a1a1a" stroke-width="6" stroke-linecap="round"/>
+      <path d="M20 22 C 30 110, 170 110, 180 22" fill="none" stroke="url(#gMetal)" stroke-width="3" stroke-dasharray="2 5"/>
+      <path d="M96 90 l8 0 l0 14 l-8 0z" fill="url(#gMetal)"/>
+      <path d="M100 104 c -24 0 -30 22 -22 34 c 8 12 36 12 44 0 c 8 -12 2 -34 -22 -34z" fill="url(#gMetalV)" stroke="#7d5407" stroke-width="1.5"/>
+      <circle cx="100" cy="124" r="6" fill="url(#gRuby)"/>
+      <g fill="url(#gMetal)"><circle cx="86" cy="150" r="4"/><circle cx="100" cy="153" r="4"/><circle cx="114" cy="150" r="4"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <span class="version-badge" id="version-badge" title="Build v1.0.0 · 2026-09-04">v1.0</span>
+    <a class="brand" href="#top" aria-label="IBI Gold Mines home">
+      <svg viewBox="0 0 512 512" aria-hidden="true"><use href="#coinSym"/></svg>
+      <span><span class="brand-title">IBI <span class="accent">Gold Mines</span></span><span class="brand-sub">Know when gold is cheap · India Business International</span></span>
+    </a>
+    <div class="topbar-actions">
+      <button class="chip-btn" id="loc-btn" title="Change city" aria-haspopup="dialog">📍 <span id="loc-name">Locating…</span></button>
+      <button class="icon-btn" id="install-btn" title="Install app" aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></button>
+      <button class="icon-btn" id="theme-btn" title="Toggle light / dark" aria-label="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4l1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4m11.4-11.4l1.4-1.4"/></svg></button>
+      <button class="icon-btn" id="settings-btn" title="Settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ═══════════ 1. LIVE PRICE ═══════════ -->
+  <section id="prices" aria-labelledby="h-prices">
+    <h2 id="h-prices" class="sr-only">Live gold price</h2>
+    <div class="hero">
+      <div class="card price-card">
+        <div class="live-row"><span class="live-dot" id="live-dot"></span><span id="live-text">Connecting to market…</span><span id="live-src" class="muted"></span></div>
+        <div class="price-label"><span id="price-title">24K Gold · <b id="price-city">India</b></span><span class="pill" id="price-purity">999.9 fine · per gram</span></div>
+        <div class="price-big"><span id="price-main" class="skeleton">₹00,000</span><small>/ gram</small></div>
+        <div class="price-change">
+          <span id="chg-day" class="up">—</span>
+          <span class="pill" id="chg-week">7d —</span>
+          <span class="pill" id="chg-month">30d —</span>
+          <span class="pill" id="chg-year">1y —</span>
+        </div>
+        <div class="rates" id="rates">
+          <div class="rate hi"><div class="k">22K · per gram</div><div class="v" id="r22g">—</div><div class="d">916 hallmark · jewellery grade</div></div>
+          <div class="rate"><div class="k" id="r22sov-k">22K · per sovereign (8 g)</div><div class="v" id="r22sov">—</div><div class="d">பவுன் · Tamil Nadu &amp; Kerala convention</div></div>
+          <div class="rate"><div class="k">24K · per 10 g</div><div class="v" id="r2410">—</div><div class="d">IBJA benchmark unit</div></div>
+          <div class="rate"><div class="k">18K · per gram</div><div class="v" id="r18g">—</div><div class="d">750 · diamond jewellery</div></div>
+          <div class="rate"><div class="k">International spot</div><div class="v" id="rusd">—</div><div class="d" id="rusd-d">USD / troy oz · ₹/$ —</div></div>
+          <div class="rate"><div class="k">Silver · per kg</div><div class="v" id="rag">—</div><div class="d">999 fine · derived</div></div>
+        </div>
+        <p class="small muted" style="margin:12px 0 0">Rates are ex-GST bullion rates calibrated to the IBJA benchmark. Jewellers add making charges and 3% GST — see the <a href="#calculator">calculator</a>.</p>
+      </div>
+      <div class="card hero-art" id="hero-art">
+        <img id="hero-img" src="hero-coins.png" alt="Stack of 24K gold coins" onerror="this.remove();document.getElementById('hero-svg').style.display='block'">
+        <svg id="hero-svg" viewBox="0 0 420 300" style="display:none" aria-hidden="true">
+          <g transform="translate(60 150) skewX(-4)">
+            <ellipse cx="120" cy="120" rx="118" ry="30" fill="#7d5407"/>
+            <ellipse cx="120" cy="112" rx="118" ry="30" fill="url(#gMetal)"/>
+            <ellipse cx="120" cy="100" rx="118" ry="30" fill="#7d5407"/>
+            <ellipse cx="120" cy="92" rx="118" ry="30" fill="url(#gMetal)"/>
+            <ellipse cx="120" cy="80" rx="118" ry="30" fill="#7d5407"/>
+            <ellipse cx="120" cy="72" rx="118" ry="30" fill="url(#gMetal)"/>
+            <ellipse cx="120" cy="60" rx="118" ry="30" fill="#7d5407"/>
+            <ellipse cx="120" cy="52" rx="118" ry="30" fill="url(#gFace)"/>
+            <ellipse cx="120" cy="52" rx="100" ry="24" fill="none" stroke="#7a5308" stroke-width="2" opacity=".6"/>
+            <text x="120" y="60" font-family="Montserrat,Arial" font-weight="800" font-size="26" fill="#7a5308" text-anchor="middle" opacity=".85">IBI</text>
+          </g>
+          <g transform="translate(250 40) rotate(12)"><use href="#coinSym" width="160" height="160"/></g>
+        </svg>
+        <span class="cap">24K coins · illustrative</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 2. BUY SIGNAL ═══════════ -->
+  <section id="signal" aria-labelledby="h-signal">
+    <div class="sec-head"><h2 id="h-signal">Should I buy gold today?</h2><span class="sub">Rule-based dip signal on the 24K INR price · not investment advice</span></div>
+    <div class="card signal">
+      <div class="gauge-wrap">
+        <svg class="gauge" id="gauge" viewBox="0 0 280 170" role="img" aria-label="Buy signal score"></svg>
+        <div class="verdict" id="verdict">Calculating…</div>
+        <div class="verdict-sub" id="verdict-sub"></div>
+      </div>
+      <div>
+        <ul class="reasons" id="reasons"></ul>
+        <div class="advice" id="advice"></div>
+        <h3 style="font-size:14px;margin:16px 0 4px">Buy zones — price levels worth waiting for</h3>
+        <table class="zones" aria-label="Buy zone price levels"><thead><tr><th>Level</th><th style="text-align:right">24K ₹/g</th><th style="text-align:right">22K ₹/g</th><th style="text-align:right">vs now</th></tr></thead><tbody id="zones"></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 3. CHART ═══════════ -->
+  <section id="chart" aria-labelledby="h-chart">
+    <div class="sec-head"><h2 id="h-chart">Price history &amp; forecast</h2><span class="sub" id="chart-sub">24K gold, ₹ per gram, IBJA-calibrated</span></div>
+    <div class="card">
+      <div class="filters">
+        <div class="seg" id="range-seg" role="group" aria-label="Date range">
+          <button data-r="1M">1M</button><button data-r="3M">3M</button><button data-r="6M">6M</button><button data-r="1Y" aria-pressed="true">1Y</button><button data-r="3Y">3Y</button><button data-r="5Y">5Y</button><button data-r="10Y">10Y</button>
+        </div>
+        <div class="seg" id="unit-seg" role="group" aria-label="Unit">
+          <button data-u="inr_g" aria-pressed="true">₹ / g</button><button data-u="inr_10g">₹ / 10 g</button><button data-u="inr_sov">₹ / 8 g</button><button data-u="usd_oz">$ / oz</button>
+        </div>
+        <button class="btn" id="table-btn" aria-pressed="false" style="margin-left:auto">Table view</button>
+      </div>
+      <div class="legend" id="legend">
+        <button data-s="price" aria-pressed="true"><span class="key" style="border-color:var(--s-price)"></span>Price</button>
+        <button data-s="sma50" aria-pressed="true"><span class="key" style="border-color:var(--s-sma50)"></span>50-day average</button>
+        <button data-s="sma200" aria-pressed="true"><span class="key" style="border-color:var(--s-sma200)"></span>200-day average</button>
+        <button data-s="band" aria-pressed="true"><span class="key band"></span>Bollinger band (20, 2σ)</button>
+        <button data-s="cone" aria-pressed="true"><span class="key band" style="outline-style:dashed"></span>3-month forecast band</button>
+      </div>
+      <div class="chart-box" id="chart-box"><svg id="chart-svg" role="img" aria-label="Gold price chart"></svg><div class="tip" id="tip"></div></div>
+      <div class="chart-box" id="rsi-box" style="margin-top:6px"><svg id="rsi-svg" role="img" aria-label="RSI chart"></svg></div>
+      <div class="table-view" id="table-view" hidden></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 4. FORECAST ═══════════ -->
+  <section id="forecast" aria-labelledby="h-forecast">
+    <div class="sec-head"><h2 id="h-forecast">Expected trend</h2><span class="sub">Statistical projection from the long-run drift and 1-year volatility, cross-checked with the 6-month momentum trend</span></div>
+    <div class="grid grid-4" id="forecast-tiles"></div>
+    <div class="card" style="margin-top:12px">
+      <div class="grid grid-3" id="trend-facts"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 5. STRATEGY CHECK ═══════════ -->
+  <section id="strategy" aria-labelledby="h-strategy">
+    <div class="sec-head"><h2 id="h-strategy">Does buying the dip work?</h2><span class="sub">Back-test of this signal on the last 10 years</span></div>
+    <div class="card"><div class="grid grid-3" id="backtest"></div><p class="small muted" style="margin:12px 0 0" id="backtest-note"></p></div>
+  </section>
+
+  <!-- ═══════════ 6. COINS ═══════════ -->
+  <section id="coins" aria-labelledby="h-coins">
+    <div class="sec-head"><h2 id="h-coins">Gold coins &amp; bars — what you'd pay today</h2><span class="sub">24K 999.9 · includes <span id="coin-prem-txt">3%</span> minting premium + 3% GST</span></div>
+    <div class="gallery" id="coin-gallery"></div>
+  </section>
+
+  <!-- ═══════════ 7. ORNAMENTS ═══════════ -->
+  <section id="ornaments" aria-labelledby="h-orn">
+    <div class="sec-head"><h2 id="h-orn">Gold ornaments — indicative prices</h2><span class="sub">22K 916 hallmark · <span id="orn-va-txt">12%</span> making charge + 3% GST · typical weights</span></div>
+    <div class="gallery" id="orn-gallery"></div>
+  </section>
+
+  <!-- ═══════════ 8. CALCULATOR ═══════════ -->
+  <section id="calculator" aria-labelledby="h-calc">
+    <div class="sec-head"><h2 id="h-calc">Jewellery price calculator</h2><span class="sub">The exact bill formula Indian jewellers use</span></div>
+    <div class="card">
+      <div class="form">
+        <label class="f">Weight (grams)<input type="number" id="c-w" value="8" min="0.1" step="0.01" inputmode="decimal"></label>
+        <label class="f">Purity<select id="c-k"><option value="0.999">24K · 999</option><option value="0.916" selected>22K · 916</option><option value="0.75">18K · 750</option><option value="0.585">14K · 585</option></select></label>
+        <label class="f">Making / VA (%)<input type="number" id="c-va" value="12" min="0" step="0.5" inputmode="decimal"></label>
+        <label class="f">Stone / extras (₹)<input type="number" id="c-stone" value="0" min="0" step="1" inputmode="numeric"></label>
+        <label class="f">GST (%)<input type="number" id="c-gst" value="3" min="0" step="0.5" inputmode="decimal"></label>
+      </div>
+      <div class="total"><span class="small muted">Estimated bill</span><span class="big" id="c-total">₹0</span></div>
+      <table class="breakdown" id="c-break"></table>
+      <p class="small muted" style="margin:10px 0 0">Old-gold exchange value (what a jeweller typically pays for the same piece, before deductions): <b id="c-exchange">—</b></p>
+    </div>
+  </section>
+
+  <!-- ═══════════ 9. ALERTS ═══════════ -->
+  <section id="alerts" aria-labelledby="h-alerts">
+    <div class="sec-head"><h2 id="h-alerts">Price alerts</h2><span class="sub">Checked every minute while the app is open</span></div>
+    <div class="card">
+      <div class="form">
+        <label class="f">Alert me when 24K falls below (₹ / g)<input type="number" id="a-price" min="1" step="1" inputmode="numeric" placeholder="e.g. 15000"></label>
+        <label class="f">Quick targets<select id="a-quick"><option value="">Choose…</option><option value="-2">2% below now</option><option value="-5">5% below now</option><option value="-10">10% below now</option><option value="sma50">50-day average</option><option value="sma200">200-day average</option><option value="bb">Lower Bollinger band</option></select></label>
+      </div>
+      <div class="btn-row"><button class="btn primary" id="a-add">Add alert</button><button class="btn" id="a-notify">Enable notifications</button></div>
+      <ul class="alerts-list" id="a-list"></ul>
+      <div class="notice" id="a-status" style="margin-top:10px">No alerts yet. Add a target and this page will flag it (and send a browser notification if you allow it).</div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 10. ABOUT ═══════════ -->
+  <section id="about" aria-labelledby="h-about">
+    <div class="sec-head"><h2 id="h-about">Sources &amp; method</h2><span class="sub">Every number on this page is derived from these</span></div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="font-size:14px;margin-bottom:8px">IBJA benchmark (₹ per 10 g, ex-GST)</h3>
+        <table class="ibja" id="ibja-table"><thead><tr><th>Date</th><th>Session</th><th>999</th><th>916</th><th>Silver 999</th></tr></thead><tbody></tbody></table>
+        <p class="small muted" style="margin:8px 0 0">India Bullion and Jewellers Association — the rate the Government uses for Sovereign Gold Bonds. Refreshed twice on working days.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:14px;margin-bottom:8px">How the price is built</h3>
+        <ol class="method">
+          <li><b>International spot</b> — gold in USD per troy ounce (live: gold-api.com; history: COMEX GC=F via Yahoo Finance).</li>
+          <li><b>Convert</b> — ÷ 31.1035 g per oz × USD/INR (ECB reference rate via Frankfurter).</li>
+          <li><b>Land it in India</b> — add customs duty (6% since 23 Jul 2024; 15% before that; 10.75% before Jul 2022) — the schedule is applied date-by-date across the history.</li>
+          <li><b>Calibrate</b> — scale to the latest IBJA 999 rate so the level matches what Indian bullion actually trades at (factor shown below).</li>
+          <li><b>Purity</b> — 22K = 91.6%, 18K = 75%. Jewellers add making charges (VA) and 3% GST on top.</li>
+        </ol>
+        <p class="small muted" id="calib-txt" style="margin:8px 0 0"></p>
+        <h3 style="font-size:14px;margin:14px 0 6px">The buy signal</h3>
+        <p class="method" style="margin:0">Six standard technical checks are scored out of 100: RSI-14, distance from the 50- and 200-day averages, drawdown from the 52-week high, position inside the Bollinger band, and 20-day momentum. 70+ is a strong dip, 55–69 accumulate, 40–54 neutral (keep a monthly SIP), below 40 wait. The forecast band is a log-normal projection using the long-run drift and one year of daily volatility — it is a range of likely outcomes, not a prediction of a single price.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="disc"><b>Disclaimer:</b> IBI Gold Mines is an information tool. Prices are indicative bullion rates derived from public market data; your jeweller's rate will differ by making charges, local premium and GST. Nothing here is investment advice — gold prices can fall as well as rise. Decide with your own judgement or a SEBI-registered adviser.</p>
+  <div>© <span id="yr">2026</span> India Business International · eCommerce for the World · <a href="https://www.indiabusinessinternational.online/">indiabusinessinternational.online</a></div>
+  <div style="margin-top:8px;font-size:11px;opacity:.6;font-family:monospace">Build v1.0.0 · 2026-09-04 · data <span id="data-updated">—</span></div>
+</footer>
+
+<!-- Location / settings modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <div class="modal-head"><h3 id="modal-title">Location &amp; settings</h3><button class="icon-btn" id="modal-x" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="btn-row" style="margin:0 0 6px"><button class="btn" id="geo-btn">📡 Use my precise location</button><span class="small muted" id="geo-status" style="align-self:center"></span></div>
+      <div class="small muted">Your city</div>
+      <div class="city-list" id="city-list"></div>
+      <div class="form" style="margin-top:14px">
+        <label class="f">Calibrate to your jeweller — their 22K rate today (₹ / g)<input type="number" id="s-jewel" inputmode="numeric" placeholder="leave blank to use IBJA"></label>
+        <label class="f">Coin minting premium (%)<input type="number" id="s-coinprem" step="0.5" min="0"></label>
+        <label class="f">Ornament making charge / VA (%)<input type="number" id="s-va" step="0.5" min="0"></label>
+        <label class="f">Live refresh (seconds)<input type="number" id="s-refresh" step="15" min="30"></label>
+      </div>
+      <p class="small muted">The jeweller calibration is remembered per city and shifts every 22K figure on this page. Clear it to return to the IBJA benchmark.</p>
+    </div>
+    <div class="modal-foot"><button class="btn" id="modal-cancel">Cancel</button><button class="btn primary" id="modal-save">Save</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toast-txt"></span><button id="toast-btn" hidden>Update</button></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   IBI Gold Mines v1.0.0 — all the maths lives here, in one place.
+   Data: ./data/history.json (built twice a day by GitHub Actions) + live
+   spot from gold-api.com and USD/INR from Frankfurter, both CORS-enabled.
+   ═══════════════════════════════════════════════════════════════════════════ */
+'use strict';
+const APP_VERSION = 'v1.0.0';
+const OZ = 31.1034768;                     // grams per troy ounce
+const LS = { settings: 'ibigold_settings_v1', alerts: 'ibigold_alerts_v1', hist: 'ibigold_hist_v1', live: 'ibigold_live_v1' };
+
+// Customs duty on imported gold (BCD + AIDC / SWS), applied by date.
+const DUTY = [
+  { from: '2024-07-23', rate: 0.06 },
+  { from: '2022-07-01', rate: 0.15 },
+  { from: '2021-02-02', rate: 0.1075 },
+  { from: '1900-01-01', rate: 0.12875 },
+];
+const dutyFor = (iso) => { for (const d of DUTY) if (iso >= d.from) return d.rate; return 0.12875; };
+
+// Cities: label, state, sovereign convention. Regional offsets are all 0 by
+// design — the jeweller calibration is the honest way to localise.
+const CITIES = [
+  ['Chennai','TN'],['Coimbatore','TN'],['Madurai','TN'],['Nagercoil','TN'],['Tiruchirappalli','TN'],['Salem','TN'],['Tirunelveli','TN'],
+  ['Thiruvananthapuram','KL'],['Kochi','KL'],['Kozhikode','KL'],['Bengaluru','KA'],['Mysuru','KA'],['Hyderabad','TS'],['Visakhapatnam','AP'],['Vijayawada','AP'],
+  ['Mumbai','MH'],['Pune','MH'],['Nagpur','MH'],['Delhi','DL'],['Gurugram','HR'],['Noida','UP'],['Lucknow','UP'],['Jaipur','RJ'],['Ahmedabad','GJ'],['Surat','GJ'],
+  ['Kolkata','WB'],['Bhubaneswar','OD'],['Patna','BR'],['Chandigarh','CH'],['Indore','MP'],['Bhopal','MP'],['Guwahati','AS'],['Puducherry','PY'],['Goa','GA']
+];
+const SOV_STATES = new Set(['TN','KL','PY']);
+
+const DEFAULTS = { city: 'Chennai', state: 'TN', coinPrem: 3, va: 12, refresh: 60, jewel: {} , theme: 'dark', unit: 'inr_g', range: '1Y', series: { price: true, sma50: true, sma200: true, band: true, cone: true } };
+let S = loadJSON(LS.settings, {}); S = Object.assign({}, DEFAULTS, S); S.jewel = S.jewel || {}; S.series = Object.assign({}, DEFAULTS.series, S.series || {});
+let H = null;            // history document
+let LIVE = loadJSON(LS.live, null);   // { xau, inr, at, src }
+let SERIES = null;       // computed INR series + indicators
+let CALIB = 1;
+let liveTimer = null;
+
+// ── helpers ─────────────────────────────────────────────────────────────────
+function loadJSON(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+function saveJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+const $ = (id) => document.getElementById(id);
+const fmtINR = (n, d = 0) => '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: d, minimumFractionDigits: d });
+const fmtUSD = (n, d = 2) => '$' + Number(n).toLocaleString('en-US', { maximumFractionDigits: d, minimumFractionDigits: d });
+const fmtPct = (p, d = 2) => (p > 0 ? '+' : '') + (p * 100).toFixed(d) + '%';
+const fmtDate = (iso) => { const [y, m, d] = iso.split('-'); return `${d} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m - 1]} ${y}`; };
+const clsPct = (p) => p >= 0 ? 'up' : 'down';
+const arrow = (p) => p >= 0 ? '▲' : '▼';
+function toast(msg, btn) { $('toast-txt').textContent = msg; const b = $('toast-btn'); b.hidden = !btn; if (btn) b.onclick = btn; $('toast').classList.add('show'); if (!btn) setTimeout(() => $('toast').classList.remove('show'), 4000); }
+function el(tag, attrs, ...kids) { const e = document.createElementNS(tag === 'svg' || attrs?.ns ? 'http://www.w3.org/2000/svg' : 'http://www.w3.org/1999/xhtml', tag); if (attrs) for (const k in attrs) { if (k === 'ns') continue; if (k === 'text') e.textContent = attrs[k]; else e.setAttribute(k, attrs[k]); } for (const k of kids) if (k != null) e.appendChild(typeof k === 'string' ? document.createTextNode(k) : k); return e; }
+const svgEl = (tag, attrs, ...kids) => el(tag, Object.assign({ ns: 1 }, attrs), ...kids);
+
+// ── theme ───────────────────────────────────────────────────────────────────
+function setTheme(t) { S.theme = t; document.documentElement.setAttribute('data-theme', t); document.querySelector('meta[name=theme-color]').setAttribute('content', t === 'dark' ? '#161311' : '#f8f5ee'); saveJSON(LS.settings, S); if (SERIES) renderChart(); }
+$('theme-btn').onclick = () => setTheme(S.theme === 'dark' ? 'light' : 'dark');
+{ const qt = new URLSearchParams(location.search).get('theme'); if (qt === 'light' || qt === 'dark') S.theme = qt; }
+setTheme(S.theme);
+
+// ── data ────────────────────────────────────────────────────────────────────
+async function loadHistory() {
+  try {
+    const r = await fetch('./data/history.json', { cache: 'no-cache' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    H = await r.json(); saveJSON(LS.hist, H);
+  } catch (e) {
+    H = loadJSON(LS.hist, null);
+    if (!H) { toast('Could not load price history — check your connection.'); throw e; }
+    toast('Offline — showing the last saved history.');
+  }
+  $('data-updated').textContent = (H.updated || '').replace('T', ' ').replace('Z', ' UTC');
+}
+
+async function fetchLive() {
+  const out = { at: Date.now(), src: [] };
+  try {
+    const r = await fetch('https://api.gold-api.com/price/XAU', { cache: 'no-store' });
+    const j = await r.json(); if (j && j.price > 0) { out.xau = +j.price; out.xauAt = j.updatedAt; out.src.push('gold-api.com'); }
+  } catch (e) {}
+  try {
+    const r = await fetch('https://api.frankfurter.dev/v1/latest?from=USD&to=INR');
+    const j = await r.json(); if (j && j.rates && j.rates.INR) { out.inr = +j.rates.INR; out.inrDate = j.date; out.src.push('ECB/Frankfurter'); }
+  } catch (e) {}
+  if (out.xau || out.inr) { LIVE = Object.assign({}, LIVE || {}, out); saveJSON(LS.live, LIVE); }
+  return out;
+}
+
+// Build the INR 24K per-gram series from the raw document.
+function buildSeries() {
+  const inrMap = new Map(H.usdinr);
+  const inrDates = H.usdinr.map(x => x[0]);
+  let j = 0, lastInr = H.usdinr[0][1];
+  const rows = [];
+  for (const [d, usd] of H.xauusd) {
+    while (j < inrDates.length && inrDates[j] <= d) { lastInr = H.usdinr[j][1]; j++; }
+    rows.push({ d, usd, inr: lastInr, duty: dutyFor(d) });
+  }
+  // Calibration: latest IBJA PM 999 (per 10 g) vs the derived landed price that day.
+  CALIB = 1; let calibInfo = 'No IBJA calibration available — showing the derived landed price.';
+  const pm = H.ibja && H.ibja.pm ? Object.keys(H.ibja.pm).sort() : [];
+  const am = H.ibja && H.ibja.am ? Object.keys(H.ibja.am).sort() : [];
+  const pick = pm.length ? { d: pm[pm.length - 1], v: H.ibja.pm[pm[pm.length - 1]][0] / 10, s: 'PM' } : (am.length ? { d: am[am.length - 1], v: H.ibja.am[am[am.length - 1]][0] / 10, s: 'AM' } : null);
+  if (pick) {
+    let row = rows.find(r => r.d === pick.d) || rows.filter(r => r.d <= pick.d).pop();
+    if (row) { const derived = row.usd / OZ * row.inr * (1 + row.duty); CALIB = pick.v / derived; calibInfo = `Calibration factor ${CALIB.toFixed(4)} — IBJA 999 ${pick.s} on ${fmtDate(pick.d)} was ${fmtINR(pick.v)}/g against a derived landed price of ${fmtINR(derived)}/g (the residual is the Indian bullion premium).`; }
+  }
+  $('calib-txt').textContent = calibInfo;
+  const p = rows.map(r => r.usd / OZ * r.inr * (1 + r.duty) * CALIB);
+  const dates = rows.map(r => r.d);
+  const usd = rows.map(r => r.usd);
+  const n = p.length;
+  const sma = (k) => { const out = new Array(n).fill(null); let s = 0; for (let i = 0; i < n; i++) { s += p[i]; if (i >= k) s -= p[i - k]; if (i >= k - 1) out[i] = s / k; } return out; };
+  const sma20 = sma(20), sma50 = sma(50), sma200 = sma(200);
+  const std20 = new Array(n).fill(null);
+  for (let i = 19; i < n; i++) { let m = sma20[i], s = 0; for (let k = i - 19; k <= i; k++) s += (p[k] - m) ** 2; std20[i] = Math.sqrt(s / 20); }
+  // RSI-14 (Wilder)
+  const rsi = new Array(n).fill(null); let ag = 0, al = 0;
+  for (let i = 1; i < n; i++) { const ch = p[i] - p[i - 1]; const g = Math.max(ch, 0), l = Math.max(-ch, 0); if (i <= 14) { ag += g / 14; al += l / 14; if (i === 14) rsi[i] = al === 0 ? 100 : 100 - 100 / (1 + ag / al); } else { ag = (ag * 13 + g) / 14; al = (al * 13 + l) / 14; rsi[i] = al === 0 ? 100 : 100 - 100 / (1 + ag / al); } }
+  // 52-week high/low (252 sessions)
+  const hi52 = new Array(n).fill(null), lo52 = new Array(n).fill(null);
+  for (let i = 0; i < n; i++) { const a = Math.max(0, i - 251); let h = -Infinity, l = Infinity; for (let k = a; k <= i; k++) { if (p[k] > h) h = p[k]; if (p[k] < l) l = p[k]; } hi52[i] = h; lo52[i] = l; }
+  SERIES = { dates, p, usd, sma20, sma50, sma200, std20, rsi, hi52, lo52, n, rows };
+}
+
+// Score one index of the series (0–100). Returns { score, parts[] }.
+function scoreAt(i) {
+  const s = SERIES, p = s.p[i]; const parts = [];
+  const rsi = s.rsi[i]; let pts;
+  if (rsi == null) pts = 0; else pts = rsi < 30 ? 25 : rsi < 40 ? 20 : rsi < 50 ? 12 : rsi < 60 ? 6 : rsi < 70 ? 2 : 0;
+  parts.push({ k: 'rsi', pts, max: 25, val: rsi });
+  const v50 = s.sma50[i] ? p / s.sma50[i] - 1 : null;
+  pts = v50 == null ? 0 : v50 <= -0.05 ? 20 : v50 <= -0.02 ? 15 : v50 <= 0 ? 10 : v50 <= 0.03 ? 5 : 0;
+  parts.push({ k: 'sma50', pts, max: 20, val: v50 });
+  const v200 = s.sma200[i] ? p / s.sma200[i] - 1 : null;
+  pts = v200 == null ? 0 : v200 <= -0.05 ? 15 : v200 <= 0 ? 11 : v200 <= 0.05 ? 6 : v200 <= 0.15 ? 3 : 0;
+  parts.push({ k: 'sma200', pts, max: 15, val: v200 });
+  const dd = 1 - p / s.hi52[i];
+  pts = dd >= 0.10 ? 20 : dd >= 0.06 ? 15 : dd >= 0.03 ? 10 : dd >= 0.01 ? 5 : 0;
+  parts.push({ k: 'dd', pts, max: 20, val: dd });
+  const bb = (s.sma20[i] && s.std20[i]) ? (p - (s.sma20[i] - 2 * s.std20[i])) / (4 * s.std20[i]) : null;
+  pts = bb == null ? 0 : bb < 0 ? 10 : bb < 0.2 ? 8 : bb < 0.5 ? 5 : bb < 0.8 ? 2 : 0;
+  parts.push({ k: 'bb', pts, max: 10, val: bb });
+  const mom = i >= 20 ? p / s.p[i - 20] - 1 : null;
+  pts = mom == null ? 0 : mom <= -0.04 ? 10 : mom <= -0.01 ? 7 : mom <= 0.01 ? 4 : mom <= 0.04 ? 2 : 0;
+  parts.push({ k: 'mom', pts, max: 10, val: mom });
+  return { score: parts.reduce((a, b) => a + b.pts, 0), parts };
+}
+function verdictFor(score) {
+  if (score >= 70) return { t: 'Strong dip — Buy', c: 'var(--good)', sub: 'Gold is unusually cheap versus its own recent history. Good moment for a lump-sum purchase.' };
+  if (score >= 55) return { t: 'Buy / Accumulate', c: '#5bd35b', sub: 'Price is below trend. Add to holdings — split into two or three purchases.' };
+  if (score >= 40) return { t: 'Neutral — keep your SIP', c: 'var(--warn)', sub: 'No edge either way. Buy your usual monthly amount, nothing extra.' };
+  if (score >= 25) return { t: 'Wait', c: 'var(--serious)', sub: 'Price is running above trend. Postpone discretionary buying.' };
+  return { t: 'Overbought — Wait', c: 'var(--critical)', sub: 'Price is stretched well above its averages. Wait for a pull-back.' };
+}
+
+// ── pricing model ───────────────────────────────────────────────────────────
+function currentPrices() {
+  const last = SERIES.rows[SERIES.n - 1];
+  const xau = (LIVE && LIVE.xau) || last.usd;
+  const inr = (LIVE && LIVE.inr) || last.inr;
+  const duty = dutyFor(new Date().toISOString().slice(0, 10));
+  let g24 = xau / OZ * inr * (1 + duty) * CALIB;
+  // IBJA "today" per-gram spot box, when present and fresher than the PM table, nudges the calibration.
+  let jewelAdj = 0; const jw = S.jewel[S.city];
+  if (jw && jw > 0) jewelAdj = jw - g24 * 0.916;
+  const g22 = g24 * 0.916 + jewelAdj, g18 = g24 * 0.75 + jewelAdj * (0.75 / 0.916);
+  // Silver: derive from IBJA silver/gold ratio if available, else 1/80.
+  let agRatio = 1 / 66; const pmK = Object.keys(H.ibja?.pm || {}).sort(); if (pmK.length) { const r = H.ibja.pm[pmK[pmK.length - 1]]; if (r[5] && r[0]) agRatio = (r[5] / 1000) / (r[0] / 10); }  // silver ₹/kg vs gold ₹/10 g → per-gram ratio
+  return { xau, inr, g24, g22, g18, ag: g24 * agRatio * 1000, jewelAdj, live: !!(LIVE && LIVE.xau) };
+}
+
+// ── render: price card ──────────────────────────────────────────────────────
+function renderPrices() {
+  const c = currentPrices(); const s = SERIES; const p = c.g24;
+  const sovState = SOV_STATES.has(S.state);
+  $('price-city').textContent = S.city;
+  $('price-main').classList.remove('skeleton'); $('price-main').textContent = fmtINR(p);
+  const ref = (k) => s.p[Math.max(0, s.n - 1 - k)];
+  const prevClose = s.p[s.n - 2] || s.p[s.n - 1];
+  const dayChg = p / prevClose - 1;
+  const dc = $('chg-day'); dc.className = clsPct(dayChg); dc.textContent = `${arrow(dayChg)} ${fmtINR(Math.abs(p - prevClose))} (${fmtPct(dayChg)}) vs previous close`;
+  const setP = (id, k, label) => { const v = p / ref(k) - 1; const e = $(id); e.textContent = `${label} ${fmtPct(v, 1)}`; e.style.color = v >= 0 ? 'var(--good-ink)' : 'var(--critical-ink)'; };
+  setP('chg-week', 5, '7d'); setP('chg-month', 21, '30d'); setP('chg-year', 252, '1y');
+  $('r22g').textContent = fmtINR(c.g22);
+  $('r22sov').textContent = fmtINR(c.g22 * 8);
+  $('r22sov-k').textContent = sovState ? '22K · per sovereign (8 g)' : '22K · per 8 g (sovereign)';
+  $('r2410').textContent = fmtINR(p * 10);
+  $('r18g').textContent = fmtINR(c.g18);
+  $('rusd').textContent = fmtUSD(c.xau); $('rusd-d').textContent = `USD / troy oz · ₹${c.inr.toFixed(2)} per $`;
+  $('rag').textContent = fmtINR(c.ag);
+  $('price-purity').textContent = (c.jewelAdj ? 'calibrated to your jeweller · ' : '999.9 fine · ') + 'per gram';
+  const dot = $('live-dot'); dot.classList.toggle('off', !c.live);
+  const at = LIVE && LIVE.at ? new Date(LIVE.at) : null;
+  $('live-text').textContent = c.live ? `Live · updated ${at.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}` : `Last close ${fmtDate(s.dates[s.n - 1])} · live feed unavailable`;
+  $('live-src').textContent = c.live ? '· ' + (LIVE.src || []).join(' + ') + ' · IBJA-calibrated' : '';
+  document.title = `${fmtINR(p)}/g 24K · IBI Gold Mines`;
+}
+
+// ── render: signal ──────────────────────────────────────────────────────────
+function renderSignal() {
+  const s = SERIES, i = s.n - 1; const c = currentPrices();
+  // Score on the live price by temporarily substituting the last point.
+  const keep = s.p[i]; s.p[i] = c.g24; const r = scoreAt(i); s.p[i] = keep;
+  const v = verdictFor(r.score);
+  // gauge
+  const g = $('gauge'); g.textContent = '';
+  const cx = 140, cy = 150, R = 118, w = 22;
+  const arc = (a0, a1, col, op) => { const p0 = [cx + R * Math.cos(a0), cy + R * Math.sin(a0)], p1 = [cx + R * Math.cos(a1), cy + R * Math.sin(a1)]; return svgEl('path', { d: `M${p0[0]} ${p0[1]} A${R} ${R} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${p1[0]} ${p1[1]}`, fill: 'none', stroke: col, 'stroke-width': w, 'stroke-linecap': 'butt', opacity: op ?? 1 }); };
+  const A = (t) => Math.PI + Math.PI * t;
+  const bands = [[0, .25, 'var(--critical)'], [.25, .40, 'var(--serious)'], [.40, .55, 'var(--warn)'], [.55, .70, '#5bd35b'], [.70, 1, 'var(--good)']];
+  for (const [a, b, col] of bands) g.appendChild(arc(A(a) + 0.01, A(b) - 0.01, col, .28));
+  const t = r.score / 100; g.appendChild(arc(A(0), A(Math.max(t, 0.005)), v.c, 1));
+  const ang = A(t); g.appendChild(svgEl('line', { x1: cx, y1: cy, x2: cx + (R - 30) * Math.cos(ang), y2: cy + (R - 30) * Math.sin(ang), stroke: 'var(--ink)', 'stroke-width': 3, 'stroke-linecap': 'round' }));
+  g.appendChild(svgEl('circle', { cx, cy, r: 7, fill: 'var(--ink)' }));
+  g.appendChild(svgEl('text', { x: cx, y: cy - 28, 'text-anchor': 'middle', fill: 'var(--ink)', 'font-family': 'Montserrat,sans-serif', 'font-weight': 800, 'font-size': 40, text: String(r.score) }));
+  g.appendChild(svgEl('text', { x: cx, y: cy - 8, 'text-anchor': 'middle', fill: 'var(--ink-3)', 'font-size': 11, text: 'BUY SCORE / 100' }));
+  g.appendChild(svgEl('text', { x: 22, y: 166, fill: 'var(--ink-3)', 'font-size': 10, text: 'Wait' }));
+  g.appendChild(svgEl('text', { x: 258, y: 166, 'text-anchor': 'end', fill: 'var(--ink-3)', 'font-size': 10, text: 'Buy' }));
+  $('verdict').textContent = v.t; $('verdict').style.color = v.c; $('verdict-sub').textContent = v.sub;
+  // reasons
+  const L = { rsi: (x) => x == null ? 'RSI-14 warming up' : `RSI-14 is <b>${x.toFixed(0)}</b> ${x < 30 ? '(oversold)' : x > 70 ? '(overbought)' : ''}`,
+    sma50: (x) => x == null ? '50-day average needs more data' : `Price is <b>${fmtPct(x, 1)}</b> vs its 50-day average`,
+    sma200: (x) => x == null ? '200-day average needs more data' : `Price is <b>${fmtPct(x, 1)}</b> vs its 200-day average`,
+    dd: (x) => `<b>${(x * 100).toFixed(1)}%</b> below the 52-week high (${fmtINR(s.hi52[i])}/g)`,
+    bb: (x) => x == null ? 'Bollinger band warming up' : `Sits at <b>${(x * 100).toFixed(0)}%</b> of the Bollinger band (0% = lower edge)`,
+    mom: (x) => x == null ? '' : `20-day momentum <b>${fmtPct(x, 1)}</b>` };
+  const ul = $('reasons'); ul.textContent = '';
+  for (const part of r.parts) { const q = part.pts / part.max; const li = el('li'); const ic = el('span', { class: 'ic ' + (q >= .6 ? 'g' : q >= .3 ? 'w' : 'b'), text: q >= .6 ? '✓' : q >= .3 ? '~' : '✕' }); const t = el('span', { class: 't' }); t.innerHTML = L[part.k](part.val); li.append(ic, t, el('span', { class: 'pts', text: `${part.pts}/${part.max}` })); ul.appendChild(li); }
+  // advice
+  const fc = forecast(); const trendUp = fc.trendSlope > 0; const bt = BT || backtest();
+  const below = [['the 50-day average', s.sma50[i]], ['the lower Bollinger band', s.sma20[i] - 2 * s.std20[i]], ['the 200-day average', s.sma200[i]], ['10% off the 52-week high', s.hi52[i] * 0.9]].filter(x => x[1] && x[1] < c.g24).sort((a, b) => b[1] - a[1]);
+  const lv = (k) => below[k] ? `${fmtINR(below[k][1])}/g (${below[k][0]})` : null;
+  const btLine = bt.sig ? `In the last 10 years, buying on days like this returned ${fmtPct(bt.sigAvg, 1)} on average over the following year, against ${fmtPct(bt.allAvg, 1)} for buying on any day` : '';
+  let adv;
+  if (r.score >= 70) adv = `<b>Buy now.</b> The dip score is ${r.score} — gold is cheap against its own recent history. ${btLine ? btLine + '.' : ''} If the amount is large, split it 50/50 over two weeks in case the fall continues.`;
+  else if (r.score >= 55) adv = `<b>Accumulate.</b> Price is below trend but not at an extreme. Buy your planned amount now and keep some cash for a deeper dip${lv(0) ? ' near ' + lv(0) : ''}.`;
+  else if (r.score >= 40) adv = `<b>Stick to a monthly SIP.</b> Nothing about today's price is special. Buying a fixed amount every month (rupee-cost averaging) beats trying to time a neutral market. ${trendUp ? 'The 6-month trend is still up, so waiting has a cost.' : 'The 6-month trend is soft — no rush.'}`;
+  else adv = `<b>Wait.</b> Gold is ${fmtPct(r.parts[1].val || 0, 1)} above its 50-day average and the dip score is only ${r.score}. ${lv(0) ? `Set an alert for ${lv(0)}${lv(1) ? ' or ' + lv(1) : ''} and let the price come to you.` : 'Keep to your monthly SIP and let the price come to you.'}`;
+  $('advice').innerHTML = adv;
+  // zones
+  const z = [['Lower Bollinger band', s.sma20[i] - 2 * s.std20[i]], ['50-day average', s.sma50[i]], ['5% below 52-week high', s.hi52[i] * 0.95], ['200-day average', s.sma200[i]], ['10% below 52-week high', s.hi52[i] * 0.90], ['52-week low', s.lo52[i]]].filter(x => x[1]).sort((a, b) => b[1] - a[1]);
+  const tb = $('zones'); tb.textContent = '';
+  for (const [name, val] of z) { const d = val / c.g24 - 1; const tr = el('tr'); tr.append(el('td', { text: name }), el('td', { class: 'num', text: fmtINR(val) }), el('td', { class: 'num', text: fmtINR(val * 0.916 + c.jewelAdj) }), el('td', { class: 'num ' + (d < 0 ? 'below' : 'above'), text: d < 0 ? `${fmtPct(d, 1)} below` : `${fmtPct(d, 1)} above` })); tb.appendChild(tr); }
+}
+
+// ── forecast ────────────────────────────────────────────────────────────────
+function forecast() {
+  const s = SERIES, n = s.n; const c = currentPrices(); const P = c.g24;
+  const lr = []; for (let i = Math.max(1, n - 252); i < n; i++) lr.push(Math.log(s.p[i] / s.p[i - 1]));
+  const mu1 = lr.reduce((a, b) => a + b, 0) / lr.length;                       // last-year drift (shown as a fact)
+  const sig = Math.sqrt(lr.reduce((a, b) => a + (b - mu1) ** 2, 0) / Math.max(1, lr.length - 1));
+  const mu = Math.log(s.p[n - 1] / s.p[0]) / (n - 1);                          // long-run drift over the whole history — less recency bias
+  // Momentum: OLS on log price over the last 126 sessions.
+  const m = Math.min(126, n); let sx = 0, sy = 0, sxx = 0, sxy = 0;
+  for (let k = 0; k < m; k++) { const x = k, y = Math.log(s.p[n - m + k]); sx += x; sy += y; sxx += x * x; sxy += x * y; }
+  const slope = (m * sxy - sx * sy) / (m * sxx - sx * sx);
+  const horizons = [[21, '1 month'], [63, '3 months'], [126, '6 months'], [252, '12 months']].map(([h, label]) => {
+    const med = P * Math.exp(mu * h), lo = P * Math.exp(mu * h - sig * Math.sqrt(h)), hi = P * Math.exp(mu * h + sig * Math.sqrt(h));
+    const trend = P * Math.exp(Math.max(-0.004, Math.min(0.004, slope)) * h);
+    return { h, label, med, lo, hi, trend };
+  });
+  return { mu, mu1, sig, annVol: sig * Math.sqrt(252), annDrift: Math.exp(mu1 * 252) - 1, longDrift: Math.exp(mu * 252) - 1, trendSlope: slope, trendAnn: Math.exp(slope * 252) - 1, horizons, P };
+}
+function renderForecast() {
+  const f = forecast(); const s = SERIES, i = s.n - 1;
+  const wrap = $('forecast-tiles'); wrap.textContent = '';
+  for (const h of f.horizons) {
+    const chg = h.med / f.P - 1;
+    const t = el('div', { class: 'card tile' });
+    t.append(el('div', { class: 'k', text: `Expected in ${h.label}` }), el('div', { class: 'v', text: fmtINR(h.med) }), el('div', { class: 'r' }, el('span', { class: clsPct(chg), text: `${arrow(chg)} ${fmtPct(chg, 1)}` }), ` · likely range ${fmtINR(h.lo)} – ${fmtINR(h.hi)}`), el('div', { class: 'r muted', text: `Momentum model: ${fmtINR(h.trend)}` }));
+    const bar = el('div', { class: 'bar' }); const lo = Math.min(h.lo, h.trend, h.med), hi = Math.max(h.hi, h.trend, h.med); const pos = (x) => ((x - lo) / (hi - lo) * 100).toFixed(1) + '%';
+    const fill = el('i'); fill.style.left = pos(h.lo); fill.style.width = ((h.hi - h.lo) / (hi - lo) * 100).toFixed(1) + '%'; bar.appendChild(fill);
+    const now = el('i'); now.style.left = pos(f.P); now.style.width = '3px'; now.style.background = 'var(--ink)'; bar.appendChild(now); t.appendChild(bar);
+    wrap.appendChild(t);
+  }
+  const facts = $('trend-facts'); facts.textContent = '';
+  const trendLabel = s.sma50[i] > s.sma200[i] ? 'Up-trend (50-day above 200-day)' : 'Down-trend (50-day below 200-day)';
+  const items = [
+    ['Primary trend', trendLabel, s.sma50[i] > s.sma200[i] ? 'up' : 'down'],
+    ['6-month momentum', `${fmtPct(f.trendAnn, 1)} annualised`, clsPct(f.trendAnn)],
+    ['1-year realised return', `${fmtPct(f.annDrift, 1)} · long-run ${fmtPct(f.longDrift, 1)} a year`, clsPct(f.annDrift)],
+    ['Volatility', `${(f.annVol * 100).toFixed(1)}% annualised · ±${(f.sig * 100).toFixed(2)}% a day`, ''],
+    ['52-week range', `${fmtINR(s.lo52[i])} – ${fmtINR(s.hi52[i])} /g`, ''],
+    ['10-year change', `${fmtPct(s.p[i] / s.p[0] - 1, 0)} since ${fmtDate(s.dates[0])}`, clsPct(s.p[i] / s.p[0] - 1)],
+  ];
+  for (const [k, v, cls] of items) facts.append(el('div', null, el('div', { class: 'small muted', text: k }), el('div', { class: cls, style: 'font-weight:600', text: v })));
+}
+
+// ── back-test ───────────────────────────────────────────────────────────────
+let BT = null;
+function backtest() {
+  const s = SERIES, n = s.n, H = 252; let sig = 0, sigRet = 0, all = 0, allRet = 0, sigWin = 0, allWin = 0;
+  const monthly = []; let lastMonth = '';
+  for (let i = 200; i + H < n; i++) {
+    const r = s.p[i + H] / s.p[i] - 1; all++; allRet += r; if (r > 0) allWin++;
+    const m = s.dates[i].slice(0, 7); if (m !== lastMonth) { monthly.push(r); lastMonth = m; }
+    if (scoreAt(i).score >= 70) { sig++; sigRet += r; if (r > 0) sigWin++; }
+  }
+  BT = { sig, sigAvg: sig ? sigRet / sig : 0, sigWin: sig ? sigWin / sig : 0, all, allAvg: allRet / all, allWin: allWin / all, monthly: monthly.reduce((a, b) => a + b, 0) / monthly.length, months: monthly.length, H, from: s.dates[200], to: s.dates[n - H - 1] };
+  return BT;
+}
+function renderBacktest() {
+  const bt = backtest(); const s = SERIES, n = s.n, H = bt.H;
+  const box = $('backtest'); box.textContent = '';
+  const tiles = [
+    ['Buying on "Strong dip" days', bt.sig ? fmtPct(bt.sigAvg, 1) : 'n/a', `${bt.sig} signal days · positive ${Math.round(bt.sigWin * 100)}% of the time`],
+    ['Buying on any day', fmtPct(bt.allAvg, 1), `${bt.all} days · positive ${Math.round(bt.allWin * 100)}% of the time`],
+    ['Monthly SIP (first session)', fmtPct(bt.monthly, 1), `${bt.months} monthly buys`],
+  ];
+  for (const [k, v, d] of tiles) box.append(el('div', { class: 'tile', style: 'padding:0' }, el('div', { class: 'k', text: k }), el('div', { class: 'v', text: v }), el('div', { class: 'r muted', text: d })));
+  $('backtest-note').textContent = `Average 12-month return after each purchase date, on the IBJA-calibrated 24K INR series from ${fmtDate(s.dates[200])} to ${fmtDate(s.dates[n - H - 1])}. Past performance is not a guarantee — gold has been in a long up-trend, so every method shows gains; the useful comparison is dip-buying versus the other two.`;
+}
+
+// ── galleries ───────────────────────────────────────────────────────────────
+const COINS = [[1, 'coin', '1 g coin'], [2, 'coin', '2 g coin'], [4, 'coin', '4 g coin'], [5, 'coin', '5 g coin'], [8, 'coin', '8 g coin (1 sovereign)'], [10, 'coin', '10 g coin'], [20, 'bar', '20 g bar'], [50, 'bar', '50 g bar'], [100, 'bar', '100 g bar']];
+const ORNS = [['chain', 'Gold chain', 8], ['bangle', 'Bangles (pair)', 16], ['ring', 'Ring with stone', 4], ['earring', 'Jhumka earrings', 6], ['necklace', 'Necklace', 24], ['mangal', 'Thali / Mangalsutra', 12]];
+function renderGalleries() {
+  const c = currentPrices();
+  $('coin-prem-txt').textContent = S.coinPrem + '%'; $('orn-va-txt').textContent = S.va + '%';
+  const cg = $('coin-gallery'); cg.textContent = '';
+  for (const [w, kind, name] of COINS) {
+    const base = c.g24 * w, total = base * (1 + S.coinPrem / 100) * 1.03;
+    const it = el('div', { class: 'item' });
+    const art = el('div', { class: 'art' }); const sv = svgEl('svg', { viewBox: kind === 'coin' ? '0 0 512 512' : '0 0 200 120' }); sv.appendChild(svgEl('use', { href: kind === 'coin' ? '#coinSym' : '#barSym' })); art.appendChild(sv);
+    it.append(art, el('div', { class: 'n', text: name }), el('div', { class: 'w', text: `24K · ${w} g · 999.9` }), el('div', { class: 'p', text: fmtINR(total) }), el('div', { class: 'sub', text: `metal ${fmtINR(base)} + premium + GST` }));
+    cg.appendChild(it);
+  }
+  const og = $('orn-gallery'); og.textContent = '';
+  for (const [sym, name, w] of ORNS) {
+    const base = c.g22 * w, total = base * (1 + S.va / 100) * 1.03;
+    const it = el('div', { class: 'item' });
+    const art = el('div', { class: 'art' }); const sv = svgEl('svg', { viewBox: '0 0 200 200' }); sv.appendChild(svgEl('use', { href: '#' + sym + 'Sym' })); art.appendChild(sv);
+    it.append(art, el('div', { class: 'n', text: name }), el('div', { class: 'w', text: `22K · ~${w} g${SOV_STATES.has(S.state) ? ` (${(w / 8).toLocaleString('en-IN', { maximumFractionDigits: 1 })} sov)` : ''}` }), el('div', { class: 'p', text: fmtINR(total) }), el('div', { class: 'sub', text: `metal ${fmtINR(base)} + VA + GST` }));
+    og.appendChild(it);
+  }
+}
+
+// ── calculator ──────────────────────────────────────────────────────────────
+function renderCalc() {
+  const c = currentPrices(); const w = +$('c-w').value || 0, k = +$('c-k').value, va = +$('c-va').value || 0, stone = +$('c-stone').value || 0, gst = +$('c-gst').value || 0;
+  const rate = k === 0.916 ? c.g22 : k === 0.75 ? c.g18 : c.g24 * k;
+  const metal = rate * w, making = metal * va / 100, sub = metal + making + stone, tax = sub * gst / 100, total = sub + tax;
+  $('c-total').textContent = fmtINR(total);
+  const tb = $('c-break'); tb.textContent = '';
+  for (const [a, b] of [[`Gold value · ${w} g × ${fmtINR(rate)}/g`, fmtINR(metal)], [`Making charge · ${va}%`, fmtINR(making)], ['Stones / extras', fmtINR(stone)], [`GST · ${gst}%`, fmtINR(tax)]]) { const tr = el('tr'); tr.append(el('td', { text: a }), el('td', { text: b })); tb.appendChild(tr); }
+  $('c-exchange').textContent = fmtINR(metal);
+}
+for (const id of ['c-w', 'c-k', 'c-va', 'c-stone', 'c-gst']) $(id).addEventListener('input', () => SERIES && renderCalc());
+
+// ── alerts ──────────────────────────────────────────────────────────────────
+let ALERTS = loadJSON(LS.alerts, []);
+function renderAlerts() {
+  const ul = $('a-list'); ul.textContent = ''; const c = SERIES ? currentPrices() : null;
+  let hit = false;
+  for (const a of ALERTS) {
+    const li = el('li'); const on = c && c.g24 <= a.price; if (on) hit = true;
+    li.append(el('span', { text: `24K below ${fmtINR(a.price)}/g` + (on ? ' — ✅ target reached' : c ? ` — ${fmtPct(a.price / c.g24 - 1, 1)} away` : '') }), el('button', { class: 'x', 'aria-label': 'Remove alert', text: '✕' }));
+    li.querySelector('.x').onclick = () => { ALERTS = ALERTS.filter(x => x !== a); saveJSON(LS.alerts, ALERTS); renderAlerts(); };
+    ul.appendChild(li);
+  }
+  const st = $('a-status'); st.classList.toggle('hit', hit);
+  st.textContent = !ALERTS.length ? 'No alerts yet. Add a target and this page will flag it (and send a browser notification if you allow it).' : hit ? 'A target has been reached — gold is at or below your alert price.' : `${ALERTS.length} alert${ALERTS.length > 1 ? 's' : ''} armed. Notifications: ${('Notification' in window) ? Notification.permission : 'unsupported'}.`;
+  if (hit && 'Notification' in window && Notification.permission === 'granted' && c) { const key = 'ibigold_notified_' + new Date().toISOString().slice(0, 10); if (!sessionStorage.getItem(key)) { sessionStorage.setItem(key, '1'); try { new Notification('IBI Gold Mines — target reached', { body: `24K gold is ${fmtINR(c.g24)}/g in ${S.city}`, icon: 'icon-192.png' }); } catch (e) {} } }
+}
+$('a-add').onclick = () => { const v = +$('a-price').value; if (!(v > 0)) { toast('Enter a target price first.'); return; } ALERTS.push({ price: Math.round(v), at: Date.now() }); saveJSON(LS.alerts, ALERTS); $('a-price').value = ''; renderAlerts(); toast('Alert added.'); };
+$('a-quick').onchange = (e) => { if (!SERIES) return; const c = currentPrices(), s = SERIES, i = s.n - 1; const v = e.target.value; let t = null; if (v === 'sma50') t = s.sma50[i]; else if (v === 'sma200') t = s.sma200[i]; else if (v === 'bb') t = s.sma20[i] - 2 * s.std20[i]; else if (v) t = c.g24 * (1 + (+v) / 100); if (t) $('a-price').value = Math.round(t); };
+$('a-notify').onclick = async () => { if (!('Notification' in window)) { toast('This browser does not support notifications.'); return; } const p = await Notification.requestPermission(); toast(p === 'granted' ? 'Notifications enabled.' : 'Notifications not allowed.'); renderAlerts(); };
+
+// ── IBJA table ──────────────────────────────────────────────────────────────
+function renderIbja() {
+  const tb = $('ibja-table').querySelector('tbody'); tb.textContent = '';
+  const rows = [];
+  for (const sess of ['am', 'pm']) for (const d of Object.keys(H.ibja?.[sess] || {})) rows.push([d, sess.toUpperCase(), H.ibja[sess][d]]);
+  rows.sort((a, b) => b[0] === a[0] ? a[1].localeCompare(b[1]) : b[0].localeCompare(a[0]));
+  for (const [d, sess, v] of rows.slice(0, 10)) { const tr = el('tr'); tr.append(el('td', { text: fmtDate(d) }), el('td', { text: sess }), el('td', { text: fmtINR(v[0]) }), el('td', { text: fmtINR(v[2]) }), el('td', { text: fmtINR(v[5]) })); tb.appendChild(tr); }
+  if (!rows.length) { const tr = el('tr'); tr.append(el('td', { colspan: 5, text: 'No IBJA rows captured yet.' })); tb.appendChild(tr); }
+}
+
+// ── chart ───────────────────────────────────────────────────────────────────
+const RANGES = { '1M': 22, '3M': 64, '6M': 127, '1Y': 253, '3Y': 757, '5Y': 1262, '10Y': 99999 };
+function unitConv(v, i) { // v is 24K ₹/g at index i
+  if (S.unit === 'inr_10g') return v * 10; if (S.unit === 'inr_sov') return v * 8; if (S.unit === 'usd_oz') return SERIES.usd[i]; return v;
+}
+function unitFmt(v) { return S.unit === 'usd_oz' ? fmtUSD(v, 0) : fmtINR(v); }
+function renderChart() {
+  const s = SERIES, n = s.n; const c = currentPrices();
+  const k = Math.min(n, RANGES[S.range]); const i0 = n - k;
+  const box = $('chart-box'); const W = Math.max(320, box.clientWidth), Hh = Math.min(420, Math.max(240, W * 0.42));
+  const padL = 8, padR = 74, padT = 14, padB = 26;
+  const svg = $('chart-svg'); svg.textContent = ''; svg.setAttribute('viewBox', `0 0 ${W} ${Hh}`); svg.setAttribute('height', Hh);
+  // live point replaces the last close so the chart ends at the live price
+  const px = s.p.slice(); px[n - 1] = c.g24;
+  const usdOz = S.unit === 'usd_oz';
+  const val = (arr, i) => arr[i] == null ? null : (usdOz ? arr[i] / px[i] * s.usd[i] : unitConv(arr[i], i));
+  const P = [], D = [];
+  for (let i = i0; i < n; i++) { P.push(usdOz ? ((LIVE && LIVE.xau && i === n - 1) ? LIVE.xau : s.usd[i]) : unitConv(px[i], i)); D.push(s.dates[i]); }
+  const f = forecast(); const showCone = S.series.cone && k >= 60; const fh = 63;
+  const coneStep = f.horizons[1];
+  let ymin = Math.min(...P), ymax = Math.max(...P);
+  const ser = { sma50: s.sma50, sma200: s.sma200 };
+  for (const key of ['sma50', 'sma200']) if (S.series[key]) for (let i = i0; i < n; i++) { const v = val(ser[key], i); if (v != null) { ymin = Math.min(ymin, v); ymax = Math.max(ymax, v); } }
+  if (S.series.band) for (let i = i0; i < n; i++) if (s.sma20[i] != null) { const lo = val([s.sma20[i] - 2 * s.std20[i]], 0); const hi = val([s.sma20[i] + 2 * s.std20[i]], 0); ymin = Math.min(ymin, lo); ymax = Math.max(ymax, hi); }
+  const scaleU = (v) => usdOz ? v / c.g24 * c.xau : (S.unit === 'inr_10g' ? v * 10 : S.unit === 'inr_sov' ? v * 8 : v);
+  if (showCone) { ymin = Math.min(ymin, scaleU(coneStep.lo)); ymax = Math.max(ymax, scaleU(coneStep.hi)); }
+  const pad = (ymax - ymin) * 0.06; ymin -= pad; ymax += pad;
+  const total = k - 1 + (showCone ? fh : 0);
+  const X = (i) => padL + (i - i0) / total * (W - padL - padR);
+  const Y = (v) => padT + (1 - (v - ymin) / (ymax - ymin)) * (Hh - padT - padB);
+  // grid + axes
+  const grid = svgEl('g', { class: 'grid' }), axis = svgEl('g', { class: 'axis' });
+  const ticks = niceTicks(ymin, ymax, 5);
+  for (const t of ticks) { grid.appendChild(svgEl('line', { x1: padL, x2: W - padR, y1: Y(t), y2: Y(t) })); axis.appendChild(svgEl('text', { x: W - padR + 8, y: Y(t) + 4, text: unitFmt(t) })); }
+  const nx = Math.max(2, Math.min(6, Math.floor(W / 160)));
+  const xlab = (iso) => { const f = fmtDate(iso); if (W < 700) return k > 400 ? f.slice(-4) : f.slice(3); return k > 400 ? f.slice(3) : f; };
+  for (let q = 0; q <= nx; q++) { const i = i0 + Math.round((k - 1) * q / nx); axis.appendChild(svgEl('text', { x: X(i), y: Hh - 8, 'text-anchor': q === 0 ? 'start' : q === nx && !showCone ? 'end' : 'middle', text: xlab(s.dates[i]) })); }
+  svg.append(grid, axis);
+  const path = (arr, getter) => { let d = ''; for (let i = i0; i < n; i++) { const v = getter(i); if (v == null) continue; d += (d ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1); } return d; };
+  if (S.series.band) { let up = '', lo = ''; for (let i = i0; i < n; i++) { if (s.sma20[i] == null) continue; const u = scaleU(s.sma20[i] + 2 * s.std20[i]), l = scaleU(s.sma20[i] - 2 * s.std20[i]); up += (up ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(u).toFixed(1); lo = 'L' + X(i).toFixed(1) + ' ' + Y(l).toFixed(1) + lo; } if (up) svg.appendChild(svgEl('path', { d: up + lo + 'Z', fill: 'var(--s-band)', stroke: 'var(--s-price)', 'stroke-width': .6, 'stroke-opacity': .5 })); }
+  if (showCone) {
+    const x0 = X(n - 1), x1 = X(n - 1 + fh); const y0 = Y(P[P.length - 1]);
+    // cone widens as sqrt(h)
+    let up = `M${x0} ${y0}`, lo = ''; const steps = 12;
+    for (let q = 1; q <= steps; q++) { const h = fh * q / steps; const med = Math.exp(f.mu * h), w = f.sig * Math.sqrt(h); const xx = x0 + (x1 - x0) * q / steps; up += `L${xx.toFixed(1)} ${Y(P[P.length - 1] * med * Math.exp(w)).toFixed(1)}`; lo = `L${xx.toFixed(1)} ${Y(P[P.length - 1] * med * Math.exp(-w)).toFixed(1)}` + lo; }
+    svg.appendChild(svgEl('path', { d: up + lo + 'Z', fill: 'var(--s-cone)', stroke: 'var(--s-price)', 'stroke-width': 1, 'stroke-dasharray': '4 3', 'stroke-opacity': .6 }));
+    svg.appendChild(svgEl('line', { x1: x0, x2: x1, y1: y0, y2: Y(P[P.length - 1] * Math.exp(f.mu * fh)), stroke: 'var(--s-price)', 'stroke-width': 1.5, 'stroke-dasharray': '5 4' }));
+    axis.appendChild(svgEl('text', { x: x1, y: Hh - 8, 'text-anchor': 'end', text: W < 700 ? '+3 mo' : '+3 months' }));
+  }
+  if (S.series.sma200) svg.appendChild(svgEl('path', { d: path(s.sma200, (i) => val(s.sma200, i)), fill: 'none', stroke: 'var(--s-sma200)', 'stroke-width': 1.5 }));
+  if (S.series.sma50) svg.appendChild(svgEl('path', { d: path(s.sma50, (i) => val(s.sma50, i)), fill: 'none', stroke: 'var(--s-sma50)', 'stroke-width': 1.5 }));
+  if (S.series.price) svg.appendChild(svgEl('path', { d: path(null, (i) => P[i - i0]), fill: 'none', stroke: 'var(--s-price)', 'stroke-width': 2, 'stroke-linejoin': 'round' }));
+  // direct end labels (relief for the low-contrast gold on light)
+  const lab = (v, col, txt, dy) => { if (v == null) return; svg.appendChild(svgEl('rect', { x: W - padR + 4, y: Y(v) - 8 + dy, width: 66, height: 15, rx: 4, fill: col })); svg.appendChild(svgEl('text', { x: W - padR + 37, y: Y(v) + 3.5 + dy, 'text-anchor': 'middle', fill: '#fff', 'font-size': 10, 'font-weight': 700, text: txt })); };
+  const endY = P[P.length - 1]; lab(endY, 'var(--s-price-hi)', unitFmt(endY), 0);
+  const marker = svgEl('circle', { cx: X(n - 1), cy: Y(endY), r: 4, fill: 'var(--s-price-hi)', stroke: 'var(--card)', 'stroke-width': 2 }); svg.appendChild(marker);
+  // hover
+  const hover = svgEl('g', { style: 'display:none' }); const hl = svgEl('line', { y1: padT, y2: Hh - padB, stroke: 'var(--ink-3)', 'stroke-width': 1, 'stroke-dasharray': '3 3' }); const hd = svgEl('circle', { r: 4.5, fill: 'var(--s-price-hi)', stroke: 'var(--card)', 'stroke-width': 2 }); hover.append(hl, hd); svg.appendChild(hover);
+  const hit = svgEl('rect', { x: padL, y: padT, width: W - padL - padR, height: Hh - padT - padB, fill: 'transparent' }); svg.appendChild(hit);
+  const tip = $('tip');
+  const move = (ev) => { const r = svg.getBoundingClientRect(); const mx = (ev.clientX - r.left) * (W / r.width); let i = i0 + Math.round((mx - padL) / (W - padL - padR) * total); i = Math.max(i0, Math.min(n - 1, i)); const v = P[i - i0]; hover.style.display = ''; hl.setAttribute('x1', X(i)); hl.setAttribute('x2', X(i)); hd.setAttribute('cx', X(i)); hd.setAttribute('cy', Y(v));
+    tip.textContent = ''; tip.appendChild(el('div', { class: 'd', text: fmtDate(s.dates[i]) + (i === n - 1 && c.live ? ' · live' : '') }));
+    const row = (col, k, val) => { if (val == null) return; const d = el('div', { class: 'r' }); const kk = el('span', { class: 'k' }); const ii = el('i'); ii.style.borderColor = col; kk.append(ii, k); d.append(kk, el('b', { text: typeof val === 'number' ? unitFmt(val) : val })); tip.appendChild(d); };
+    row('var(--s-price)', 'Price', v); if (S.series.sma50) row('var(--s-sma50)', '50-day', val(s.sma50, i)); if (S.series.sma200) row('var(--s-sma200)', '200-day', val(s.sma200, i)); if (s.rsi[i] != null) row('var(--ink-3)', 'RSI-14', s.rsi[i].toFixed(0)); row('var(--ink-3)', 'Buy score', String(scoreAt(i).score));
+    tip.style.display = 'block'; const bx = box.getBoundingClientRect(); let lx = ev.clientX - bx.left + 14; if (lx + 190 > bx.width) lx = ev.clientX - bx.left - 200; tip.style.left = lx + 'px'; tip.style.top = Math.max(0, ev.clientY - bx.top - 60) + 'px'; };
+  hit.addEventListener('pointermove', move); hit.addEventListener('pointerdown', move); hit.addEventListener('pointerleave', () => { hover.style.display = 'none'; tip.style.display = 'none'; });
+  // RSI panel
+  const rs = $('rsi-svg'); rs.textContent = ''; const RH = 90; rs.setAttribute('viewBox', `0 0 ${W} ${RH}`); rs.setAttribute('height', RH);
+  const RY = (v) => 10 + (1 - v / 100) * (RH - 26);
+  rs.appendChild(svgEl('rect', { x: padL, y: RY(70), width: W - padL - padR, height: RY(30) - RY(70), fill: 'var(--s-band)' }));
+  for (const t of [30, 50, 70]) { rs.appendChild(svgEl('line', { x1: padL, x2: W - padR, y1: RY(t), y2: RY(t), stroke: 'var(--s-grid)' })); rs.appendChild(svgEl('text', { x: W - padR + 8, y: RY(t) + 4, fill: 'var(--s-axis)', 'font-size': 10, text: String(t) })); }
+  rs.appendChild(svgEl('path', { d: path(s.rsi, (i) => s.rsi[i] == null ? null : s.rsi[i]).replace(/ (\d+\.?\d*)/g, (m, y) => ' ' + y) , fill: 'none', stroke: 'var(--ink-2)', 'stroke-width': 1.5, transform: '' }));
+  // (the path helper uses Y(); redo with RY for the RSI scale)
+  { let d = ''; for (let i = i0; i < n; i++) { if (s.rsi[i] == null) continue; d += (d ? 'L' : 'M') + X(i).toFixed(1) + ' ' + RY(s.rsi[i]).toFixed(1); } rs.lastChild.setAttribute('d', d); }
+  rs.appendChild(svgEl('text', { x: padL + 4, y: 12, fill: 'var(--s-axis)', 'font-size': 10, text: 'RSI-14 · shaded = 30–70 normal zone' }));
+  $('chart-sub').textContent = (usdOz ? 'International spot, USD per troy ounce' : `24K gold, ${S.unit === 'inr_10g' ? '₹ per 10 g' : S.unit === 'inr_sov' ? '₹ per sovereign (8 g)' : '₹ per gram'}, IBJA-calibrated`) + ` · ${fmtDate(s.dates[i0])} → today`;
+  renderTable(i0);
+}
+function niceTicks(lo, hi, n) { const span = hi - lo; const raw = span / n; const mag = Math.pow(10, Math.floor(Math.log10(raw))); const norm = raw / mag; const step = (norm < 1.5 ? 1 : norm < 3 ? 2 : norm < 7 ? 5 : 10) * mag; const out = []; for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) out.push(+v.toFixed(6)); return out; }
+function renderTable(i0) {
+  const tv = $('table-view'); if (tv.hidden) return; const s = SERIES, n = s.n; tv.textContent = '';
+  const t = el('table'); const th = el('tr'); for (const h of ['Date', 'Price', '50-day', '200-day', 'RSI-14', 'Buy score']) th.appendChild(el('th', { text: h })); t.appendChild(th);
+  for (let i = n - 1; i >= Math.max(i0, n - 60); i--) { const tr = el('tr'); tr.append(el('td', { text: fmtDate(s.dates[i]) }), el('td', { text: unitFmt(unitConv(s.p[i], i)) }), el('td', { text: s.sma50[i] ? unitFmt(unitConv(s.sma50[i], i)) : '—' }), el('td', { text: s.sma200[i] ? unitFmt(unitConv(s.sma200[i], i)) : '—' }), el('td', { text: s.rsi[i] == null ? '—' : s.rsi[i].toFixed(0) }), el('td', { text: String(scoreAt(i).score) })); t.appendChild(tr); }
+  tv.appendChild(t); tv.appendChild(el('p', { class: 'small muted', text: 'Latest 60 sessions of the selected range.' }));
+}
+$('range-seg').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; S.range = b.dataset.r; for (const x of $('range-seg').children) x.setAttribute('aria-pressed', x === b); saveJSON(LS.settings, S); renderChart(); });
+$('unit-seg').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; S.unit = b.dataset.u; for (const x of $('unit-seg').children) x.setAttribute('aria-pressed', x === b); saveJSON(LS.settings, S); renderChart(); });
+$('legend').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.s; S.series[k] = !S.series[k]; b.setAttribute('aria-pressed', S.series[k]); saveJSON(LS.settings, S); renderChart(); });
+$('table-btn').onclick = () => { const tv = $('table-view'); tv.hidden = !tv.hidden; $('table-btn').setAttribute('aria-pressed', !tv.hidden); if (SERIES) renderChart(); };
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => SERIES && renderChart(), 120); });
+for (const x of $('range-seg').children) x.setAttribute('aria-pressed', x.dataset.r === S.range);
+for (const x of $('unit-seg').children) x.setAttribute('aria-pressed', x.dataset.u === S.unit);
+for (const x of $('legend').children) x.setAttribute('aria-pressed', !!S.series[x.dataset.s]);
+
+// ── location ────────────────────────────────────────────────────────────────
+function nearestCity(name, state) {
+  if (name) { const hit = CITIES.find(c => c[0].toLowerCase() === name.toLowerCase()); if (hit) return hit; }
+  const byState = CITIES.find(c => c[1] === state); return byState || ['Chennai', 'TN'];
+}
+const STATE_CODE = { 'Tamil Nadu': 'TN', 'Kerala': 'KL', 'Karnataka': 'KA', 'Telangana': 'TS', 'Andhra Pradesh': 'AP', 'Maharashtra': 'MH', 'Delhi': 'DL', 'Haryana': 'HR', 'Uttar Pradesh': 'UP', 'Rajasthan': 'RJ', 'Gujarat': 'GJ', 'West Bengal': 'WB', 'Odisha': 'OD', 'Bihar': 'BR', 'Chandigarh': 'CH', 'Madhya Pradesh': 'MP', 'Assam': 'AS', 'Puducherry': 'PY', 'Goa': 'GA' };
+async function detectLocation(coords) {
+  try {
+    const q = coords ? `?latitude=${coords.latitude}&longitude=${coords.longitude}&localityLanguage=en` : '?localityLanguage=en';
+    const r = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client' + q); const j = await r.json();
+    if (j.countryCode !== 'IN') { $('geo-status').textContent = `Detected ${j.countryName || 'outside India'} — showing Indian rates for ${S.city}.`; return null; }
+    const code = j.principalSubdivisionCode ? j.principalSubdivisionCode.replace('IN-', '') : STATE_CODE[j.principalSubdivision] || '';
+    // Map a district name to the nearest listed city where obvious.
+    const raw = (j.city || j.locality || '').trim();
+    const alias = { 'Kalkulam': 'Nagercoil', 'Kanniyakumari': 'Nagercoil', 'Kanyakumari': 'Nagercoil', 'Vilavancode': 'Nagercoil', 'Thoothukudi': 'Tirunelveli', 'Chengalpattu': 'Chennai', 'Kancheepuram': 'Chennai', 'Tiruvallur': 'Chennai', 'Ernakulam': 'Kochi', 'Bangalore': 'Bengaluru', 'Bengaluru Urban': 'Bengaluru', 'New Delhi': 'Delhi', 'Thane': 'Mumbai', 'Trichy': 'Tiruchirappalli' };
+    const [city, st] = nearestCity(alias[raw] || raw, code);
+    S.city = city; S.state = st; saveJSON(LS.settings, S);
+    $('geo-status').textContent = `Detected ${raw || j.principalSubdivision} → ${city}`;
+    return city;
+  } catch (e) { return null; }
+}
+function renderLoc() { $('loc-name').textContent = S.city; }
+
+// ── modal ───────────────────────────────────────────────────────────────────
+function openModal() {
+  const cl = $('city-list'); cl.textContent = '';
+  for (const [name, st] of CITIES) { const b = el('button', { 'aria-pressed': name === S.city, text: name }); b.onclick = () => { S.city = name; S.state = st; for (const x of cl.children) x.setAttribute('aria-pressed', x === b); $('s-jewel').value = S.jewel[name] || ''; }; cl.appendChild(b); }
+  $('s-jewel').value = S.jewel[S.city] || ''; $('s-coinprem').value = S.coinPrem; $('s-va').value = S.va; $('s-refresh').value = S.refresh; $('geo-status').textContent = '';
+  $('modal').classList.add('open'); $('modal-x').focus();
+}
+function closeModal() { $('modal').classList.remove('open'); }
+$('loc-btn').onclick = openModal; $('settings-btn').onclick = openModal; $('modal-x').onclick = closeModal; $('modal-cancel').onclick = () => { S = Object.assign({}, S, loadJSON(LS.settings, {})); closeModal(); };
+$('modal').addEventListener('click', (e) => { if (e.target === $('modal')) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+$('geo-btn').onclick = () => { if (!navigator.geolocation) { $('geo-status').textContent = 'Geolocation unsupported.'; return; } $('geo-status').textContent = 'Locating…'; navigator.geolocation.getCurrentPosition(async (pos) => { const c = await detectLocation(pos.coords); if (c) { for (const x of $('city-list').children) x.setAttribute('aria-pressed', x.textContent === c); $('s-jewel').value = S.jewel[c] || ''; } }, () => { $('geo-status').textContent = 'Location permission denied.'; }, { timeout: 10000, maximumAge: 600000 }); };
+$('modal-save').onclick = () => {
+  const jw = +$('s-jewel').value; if (jw > 0) S.jewel[S.city] = jw; else delete S.jewel[S.city];
+  S.coinPrem = Math.max(0, +$('s-coinprem').value || 0); S.va = Math.max(0, +$('s-va').value || 0); S.refresh = Math.max(30, +$('s-refresh').value || 60);
+  saveJSON(LS.settings, S); closeModal(); renderAll(); startLive(); toast('Settings saved.');
+};
+
+// ── orchestration ───────────────────────────────────────────────────────────
+function renderAll() { renderLoc(); renderPrices(); renderSignal(); renderChart(); renderForecast(); renderGalleries(); renderCalc(); renderAlerts(); }
+function startLive() { clearInterval(liveTimer); liveTimer = setInterval(async () => { await fetchLive(); if (SERIES) { renderPrices(); renderSignal(); renderChart(); renderGalleries(); renderCalc(); renderAlerts(); } }, S.refresh * 1000); }
+document.addEventListener('visibilitychange', async () => { if (!document.hidden && SERIES) { await fetchLive(); renderPrices(); renderAlerts(); } });
+
+(async function init() {
+  $('yr').textContent = new Date().getFullYear();
+  await loadHistory();
+  buildSeries();
+  renderLoc();
+  // paint immediately from history, then refine with live data + location
+  renderAll();
+  const first = !loadJSON(LS.settings, null);
+  const [, city] = await Promise.all([fetchLive(), first ? detectLocation(null) : Promise.resolve(null)]);
+  renderAll(); renderBacktest(); renderIbja();
+  if (city) toast(`Showing rates for ${city}. Change it from the 📍 button.`);
+  startLive();
+})().catch(err => { console.error(err); $('price-main').textContent = 'Unavailable'; $('price-main').classList.remove('skeleton'); });
+
+// ── PWA ─────────────────────────────────────────────────────────────────────
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; $('install-btn').style.display = 'inline-flex'; });
+$('install-btn').onclick = async () => { if (!deferredPrompt) return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; $('install-btn').style.display = 'none'; };
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('./sw.js');
+      reg.addEventListener('updatefound', () => { const nw = reg.installing; nw && nw.addEventListener('statechange', () => { if (nw.state === 'installed' && navigator.serviceWorker.controller) toast('A new version is ready.', () => { nw.postMessage({ type: 'SKIP_WAITING' }); }); }); });
+      navigator.serviceWorker.addEventListener('controllerchange', () => location.reload());
+    } catch (e) {}
+  });
+}
+</script>
+</body>
+</html>
