@@ -76,13 +76,24 @@ def main():
 
     errors = []
     gold = prev.get('xauusd', [])
-    try: gold = fetch_gold()
+    try:
+        fresh = fetch_gold()
+        # Merge by date: Yahoo occasionally omits a completed session on one call and
+        # returns it on the next (3 Sep 2026 vanished between two runs an hour apart).
+        # Keep every date we have ever seen; fresh values overwrite by date.
+        merged = {d: v for d, v in gold}
+        merged.update({d: v for d, v in fresh})
+        cutoff = fresh[0][0] if fresh else None
+        gold = sorted([[d, v] for d, v in merged.items() if cutoff is None or d >= cutoff])
     except Exception as e: errors.append(f'gold: {e}')
 
     inr = prev.get('usdinr', [])
     try:
         start = gold[0][0] if gold else (dt.date.today() - dt.timedelta(days=3660)).isoformat()
-        inr = fetch_inr(start)
+        fresh = fetch_inr(start)
+        merged = {d: v for d, v in inr}
+        merged.update({d: v for d, v in fresh})
+        inr = sorted([[d, v] for d, v in merged.items() if d >= start])
     except Exception as e: errors.append(f'inr: {e}')
 
     ibja_prev = prev.get('ibja', {'am': {}, 'pm': {}})

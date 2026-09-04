@@ -28,7 +28,7 @@
 <meta name="twitter:title" content="IBI Gold Mines — Gold Price Tracker & Buy Signals">
 <meta name="twitter:description" content="Live 24K / 22K gold rates for your Indian city, forecast bands and a buy-the-dip signal.">
 <meta name="twitter:image" content="https://gold.indiabusinessinternational.online/og-banner.png">
-<meta name="ibi-build" content="v1.0.1-2026-09-04">
+<meta name="ibi-build" content="v1.0.2-2026-09-04">
 
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
@@ -373,7 +373,7 @@ footer .disc{max-width:820px;margin:0 auto 10px;color:var(--ink-3)}
 
 <header class="topbar">
   <div class="topbar-in">
-    <span class="version-badge" id="version-badge" title="Build v1.0.1 · 2026-09-04">v1.0.1</span>
+    <span class="version-badge" id="version-badge" title="Build v1.0.2 · 2026-09-04">v1.0.2</span>
     <a class="brand" href="#top" aria-label="IBI Gold Mines home">
       <svg viewBox="0 0 512 512" aria-hidden="true"><use href="#coinSym"/></svg>
       <span><span class="brand-title">IBI <span class="accent">Gold Mines</span></span><span class="brand-sub">Know when gold is cheap · India Business International</span></span>
@@ -395,7 +395,7 @@ footer .disc{max-width:820px;margin:0 auto 10px;color:var(--ink-3)}
     <div class="hero">
       <div class="card price-card">
         <div class="live-row"><span class="live-dot" id="live-dot"></span><span id="live-text">Connecting to market…</span><span id="live-src" class="muted"></span></div>
-        <div class="price-label"><span id="price-title">24K Gold · <b id="price-city">India</b></span><span class="pill" id="price-purity">999.9 fine · per gram</span></div>
+        <div class="price-label"><span id="price-title">24K Gold · <b id="price-city">India</b></span><span class="pill" id="price-purity">999.9 fine · per gram</span><span class="pill" id="ibja-today" hidden title="India Bullion and Jewellers Association benchmark, ex-GST, per gram"></span></div>
         <div class="price-big"><span id="price-main" class="skeleton">₹00,000</span><small>/ gram</small></div>
         <div class="price-change">
           <span id="chg-day" class="up">—</span>
@@ -570,7 +570,7 @@ footer .disc{max-width:820px;margin:0 auto 10px;color:var(--ink-3)}
 <footer>
   <p class="disc"><b>Disclaimer:</b> IBI Gold Mines is an information tool. Prices are indicative bullion rates derived from public market data; your jeweller's rate will differ by making charges, local premium and GST. Nothing here is investment advice — gold prices can fall as well as rise. Decide with your own judgement or a SEBI-registered adviser.</p>
   <div>© <span id="yr">2026</span> India Business International · eCommerce for the World · <a href="https://www.indiabusinessinternational.online/">indiabusinessinternational.online</a></div>
-  <div style="margin-top:8px;font-size:11px;opacity:.6;font-family:monospace">Build v1.0.1 · 2026-09-04 · data <span id="data-updated">—</span></div>
+  <div style="margin-top:8px;font-size:11px;opacity:.6;font-family:monospace">Build v1.0.2 · 2026-09-04 · data <span id="data-updated">—</span></div>
 </footer>
 
 <!-- Location / settings modal -->
@@ -597,12 +597,12 @@ footer .disc{max-width:820px;margin:0 auto 10px;color:var(--ink-3)}
 
 <script>
 /* ═══════════════════════════════════════════════════════════════════════════
-   IBI Gold Mines v1.0.1 — all the maths lives here, in one place.
+   IBI Gold Mines v1.0.2 — all the maths lives here, in one place.
    Data: ./data/history.json (built twice a day by GitHub Actions) + live
    spot from gold-api.com and USD/INR from Frankfurter, both CORS-enabled.
    ═══════════════════════════════════════════════════════════════════════════ */
 'use strict';
-const APP_VERSION = 'v1.0.1';
+const APP_VERSION = 'v1.0.2';
 const OZ = 31.1034768;                     // grams per troy ounce
 const LS = { settings: 'ibigold_settings_v1', alerts: 'ibigold_alerts_v1', hist: 'ibigold_hist_v1', live: 'ibigold_live_v1' };
 
@@ -693,12 +693,22 @@ function buildSeries() {
   }
   // Calibration: latest IBJA PM 999 (per 10 g) vs the derived landed price that day.
   CALIB = 1; let calibInfo = 'No IBJA calibration available — showing the derived landed price.';
-  const pm = H.ibja && H.ibja.pm ? Object.keys(H.ibja.pm).sort() : [];
-  const am = H.ibja && H.ibja.am ? Object.keys(H.ibja.am).sort() : [];
-  const pick = pm.length ? { d: pm[pm.length - 1], v: H.ibja.pm[pm[pm.length - 1]][0] / 10, s: 'PM' } : (am.length ? { d: am[am.length - 1], v: H.ibja.am[am[am.length - 1]][0] / 10, s: 'AM' } : null);
-  if (pick) {
-    let row = rows.find(r => r.d === pick.d) || rows.filter(r => r.d <= pick.d).pop();
-    if (row) { const derived = row.usd / OZ * row.inr * (1 + row.duty); CALIB = pick.v / derived; calibInfo = `Calibration factor ${CALIB.toFixed(4)} — IBJA 999 ${pick.s} on ${fmtDate(pick.d)} was ${fmtINR(pick.v)}/g against a derived landed price of ${fmtINR(derived)}/g (the residual is the Indian bullion premium).`; }
+  // Median of the ratio over the last IBJA sessions that have an EXACT gold-date match.
+  // One day's ratio is fragile: when Yahoo dropped 3 Sep 2026 the nearest-row fallback
+  // paired IBJA 3 Sep with the 2 Sep close and the whole page jumped 2.3%.
+  // IBJA fixes its PM rate at ~17:00 IST, halfway through the COMEX session dated D, so the
+  // matching dollar price is the mean of close(D-1) and close(D). Measured on live data the
+  // pairing dispersion is: PM/avg 0.29% ≪ PM/same-day 1.0% ≈ PM/prev-day 1.0% — use PM/avg,
+  // AM/avg as the fallback when no PM rows exist.
+  const idx = new Map(rows.map((r, i) => [r.d, i]));
+  const mk = (sess) => { const out = []; for (const d of Object.keys(H.ibja?.[sess] || {})) { const i = idx.get(d); if (i == null || i < 1) continue; const r = rows[i], usd = (rows[i - 1].usd + r.usd) / 2; out.push({ d, sess, v: H.ibja[sess][d][0] / 10, derived: usd / OZ * r.inr * (1 + r.duty) }); } return out.sort((a, b) => a.d.localeCompare(b.d)); };
+  let pts = mk('pm'); if (!pts.length) pts = mk('am');
+  const recent = pts.slice(-10);
+  if (recent.length) {
+    const ratios = recent.map(x => x.v / x.derived).sort((a, b) => a - b);
+    CALIB = ratios[Math.floor(ratios.length / 2)];
+    const last = recent[recent.length - 1];
+    calibInfo = `Calibration factor ${CALIB.toFixed(4)} — median over ${recent.length} IBJA session${recent.length > 1 ? 's' : ''} up to ${fmtDate(last.d)} (${last.sess.toUpperCase()} 999 ${fmtINR(last.v)}/g vs a derived landed price of ${fmtINR(last.derived)}/g). The residual is the Indian bullion premium.`;
   }
   $('calib-txt').textContent = calibInfo;
   const p = rows.map(r => r.usd / OZ * r.inr * (1 + r.duty) * CALIB);
@@ -785,6 +795,7 @@ function renderPrices() {
   $('rusd').textContent = fmtUSD(c.xau); $('rusd-d').textContent = `USD / troy oz · ₹${c.inr.toFixed(2)} per $`;
   $('rag').textContent = fmtINR(c.ag);
   $('price-purity').textContent = (c.jewelAdj ? 'calibrated to your jeweller · ' : '999.9 fine · ') + 'per gram';
+  { const t = H.ibja_today; const chip = $('ibja-today'); if (t && t['999']) { const diff = p / t['999'] - 1; chip.textContent = `IBJA ${fmtDate(t.date).slice(0, 6)} ₹${Number(t['999']).toLocaleString('en-IN')}/g · live ${fmtPct(diff, 1)}`; chip.hidden = false; } else chip.hidden = true; }
   const dot = $('live-dot'); dot.classList.toggle('off', !c.live);
   const at = LIVE && LIVE.at ? new Date(LIVE.at) : null;
   $('live-text').textContent = c.live ? `Live · updated ${at.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}` : `Last close ${fmtDate(s.dates[s.n - 1])} · live feed unavailable`;

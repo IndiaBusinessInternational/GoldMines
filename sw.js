@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   IBI Gold Mines — service worker (v1.0.1)
+   IBI Gold Mines — service worker (v1.0.2)
 
    • Navigations (HTML shell): NETWORK FIRST — a price app must never boot from
      a stale shell; the cache is only the offline lifeboat.
@@ -11,7 +11,7 @@
    ⚠ PRECACHE USES cache:'reload' — a plain cache.addAll() goes through the
    browser HTTP cache and can ship the PREVIOUS build under a new badge.
    ═══════════════════════════════════════════════════════════════════════════ */
-const VERSION     = 'v1.0.1';
+const VERSION     = 'v1.0.2';
 const SHELL_CACHE = 'ibigold-shell-' + VERSION;
 const ASSET_CACHE = 'ibigold-assets-' + VERSION;
 const OFFLINE_URL = './index.html';
