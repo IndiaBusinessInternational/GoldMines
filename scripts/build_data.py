@@ -12,6 +12,8 @@ premium); this file stays raw so the maths lives in exactly one place.
 """
 import json, re, sys, os, datetime as dt, urllib.request
 
+PIPELINE_VERSION = 'v1.1.0'   # must match APP_VERSION in index.html
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT  = os.path.join(ROOT, 'data', 'history.json')
 UA   = 'Mozilla/5.0 (compatible; IBI-GoldMines-data/1.0; +https://gold.indiabusinessinternational.online)'
@@ -22,18 +24,39 @@ def get(url, timeout=60):
         return r.read().decode('utf-8', 'replace')
 
 def fetch_gold():
-    """[[iso_date, close_usd_per_oz], ...] oldest -> newest, 10y daily."""
+    """[[iso_date, close_usd_per_oz], ...] oldest -> newest, 10y daily.
+
+    SETTLED SESSIONS ONLY. Both scheduled runs (07:30 and 12:30 UTC) fire while
+    the COMEX session dated today is still trading, so Yahoo's last bar is an
+    in-progress print, not a close. Storing it corrupts the series: the 4 Sep
+    2026 run captured 4488.9 at 16:29 UTC when that session actually closed at
+    4429.8, an error of 1.33% that then fed the day-change on the page. Today's
+    price belongs to the live feed, not to the history.
+    """
     j = json.loads(get('https://query1.finance.yahoo.com/v8/finance/chart/GC=F?range=10y&interval=1d'))
     res = j['chart']['result'][0]
     ts  = res['timestamp']
     cl  = res['indicators']['quote'][0]['close']
+    today = dt.datetime.now(dt.timezone.utc).date().isoformat()
     out = []
     for t, c in zip(ts, cl):
         if c is None: continue
         d = dt.datetime.fromtimestamp(t, dt.timezone.utc).date().isoformat()
+        if d >= today: continue
         if out and out[-1][0] == d: out[-1][1] = round(float(c), 2)
         else: out.append([d, round(float(c), 2)])
     return out
+
+
+# NOTE — do not "correct" the live spot onto the futures curve.
+# On 7 Sep 2026 (US Labor Day) Yahoo's GC=F sat frozen at a pre-holiday 4476.6
+# while spot traded down to 4393.2, a 1.9% gap that looks exactly like a
+# term-structure basis and is not one. Converting by it would have priced the
+# page 1.96% ABOVE the Indian benchmark. The check that settles it: IBJA's live
+# 999 rate divided by the spot-derived landed price is 1.0778, and the
+# calibration factor taken from the futures history is 1.0784. They agree to
+# 0.06%, so the two dollar legs sit at the same level and the existing
+# spot-fed calculation is right.
 
 def fetch_inr(start):
     j = json.loads(get(f'https://api.frankfurter.dev/v1/{start}..?from=USD&to=INR'))
@@ -103,17 +126,24 @@ def main():
         fresh = fetch_ibja()
         ibja['am'].update(fresh['am']); ibja['pm'].update(fresh['pm'])
         if fresh['today_per_g']['999']:
-            today_per_g = {'date': dt.date.today().isoformat(), **fresh['today_per_g']}
+            # This box is IBJA's LIVE rate, not a session fixing, so the read time
+            # is the right stamp. It is only ever misleading when the file itself
+            # is stale, which the page now says out loud rather than implying the
+            # live price has drifted from the benchmark.
+            today_per_g = {'date': dt.date.today().isoformat(),
+                           'at': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+                           **fresh['today_per_g']}
     except Exception as e: errors.append(f'ibja: {e}')
 
     if not gold or not inr:
         print('FATAL: no price series', errors); sys.exit(1)
 
     doc = {
-        'schema': 1,
+        'schema': 2,
+        'pipeline_version': PIPELINE_VERSION,
         'updated': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
         'sources': {
-            'xauusd': 'Yahoo Finance GC=F (COMEX gold futures front month), USD per troy ounce, daily close',
+            'xauusd': 'Yahoo Finance GC=F (COMEX gold futures front month), USD per troy ounce, settled daily closes only',
             'usdinr': 'Frankfurter (ECB reference rate), INR per USD, daily',
             'ibja':   'India Bullion and Jewellers Association, ibjarates.com, INR per 10 g, AM/PM; columns 999,995,916,750,585,silver999,platinum999',
         },
@@ -128,8 +158,11 @@ def main():
     with open(tmp, 'w', encoding='utf-8') as f:
         json.dump(doc, f, separators=(',', ':'), ensure_ascii=False)
     os.replace(tmp, OUT)
+    t = today_per_g or {}
     print(f'ok: gold {len(gold)} pts ({gold[0][0]}..{gold[-1][0]}), inr {len(inr)} pts, '
-          f'ibja am {len(doc["ibja"]["am"])} / pm {len(doc["ibja"]["pm"])} days, errors={errors}')
+          f'ibja am {len(doc["ibja"]["am"])} / pm {len(doc["ibja"]["pm"])} days, '
+          f'ibja live 999={t.get("999")} 916={t.get("916")} read {t.get("at")}, '
+          f'errors={errors}')
 
 if __name__ == '__main__':
     main()

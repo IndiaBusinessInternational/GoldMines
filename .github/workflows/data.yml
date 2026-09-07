@@ -2,10 +2,18 @@ name: Refresh gold data
 
 # IBJA publishes the AM rate ~12:00 IST and the PM rate ~17:00 IST.
 # 07:30 UTC = 13:00 IST, 12:30 UTC = 18:00 IST. Weekdays only (bullion markets).
+#
+# Four windows, not two. GitHub does not guarantee a scheduled run: it silently
+# drops them under load, and the 07:30 run on Mon 7 Sep 2026 never fired, which
+# left the page serving Friday's benchmark for three days. Each pair below is a
+# retry of the same fixing, so losing one run no longer costs a whole session.
+# The build is idempotent and only commits when the file actually changes.
 on:
   schedule:
-    - cron: '30 7 * * 1-5'
-    - cron: '30 12 * * 1-5'
+    - cron: '30 7 * * 1-5'     # 13:00 IST - after the AM fixing
+    - cron: '30 9 * * 1-5'     # 15:00 IST - retry of the AM window
+    - cron: '30 12 * * 1-5'    # 18:00 IST - after the PM fixing
+    - cron: '30 15 * * 1-5'    # 21:00 IST - retry of the PM window
   workflow_dispatch:
 
 permissions:
