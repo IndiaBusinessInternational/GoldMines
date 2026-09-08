@@ -12,7 +12,7 @@ premium); this file stays raw so the maths lives in exactly one place.
 """
 import json, re, sys, os, datetime as dt, urllib.request
 
-PIPELINE_VERSION = 'v1.1.0'   # must match APP_VERSION in index.html
+PIPELINE_VERSION = 'v1.1.1'   # must match APP_VERSION in index.html
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT  = os.path.join(ROOT, 'data', 'history.json')
