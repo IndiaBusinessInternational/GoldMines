@@ -1,4 +1,4 @@
-# IBI Gold Mines — v1.1.2
+# IBI Gold Mines — v1.1.3
 
 Live gold price tracker for Indian cities with trend forecasts and a rule-based
 **buy-the-dip signal**. Built by India Business International.
