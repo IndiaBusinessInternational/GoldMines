@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   IBI Gold Mines — service worker (v1.1.3)
+   IBI Gold Mines — service worker (v1.1.4)
 
    • Navigations (HTML shell): NETWORK FIRST — a price app must never boot from
      a stale shell; the cache is only the offline lifeboat.
@@ -11,11 +11,11 @@
    ⚠ PRECACHE USES cache:'reload' — a plain cache.addAll() goes through the
    browser HTTP cache and can ship the PREVIOUS build under a new badge.
    ═══════════════════════════════════════════════════════════════════════════ */
-const VERSION     = 'v1.1.3';
+const VERSION     = 'v1.1.4';
 const SHELL_CACHE = 'ibigold-shell-' + VERSION;
 const ASSET_CACHE = 'ibigold-assets-' + VERSION;
 const OFFLINE_URL = './index.html';
-const PRECACHE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './data/history.json'];
+const PRECACHE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './ibi-share.js', './data/history.json'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
